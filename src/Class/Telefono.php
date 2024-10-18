@@ -18,10 +18,11 @@ class Telefono
         return $this->prefijo;
     }
 
-    public function setPrefijo(string $prefijo): void
+    public function setPrefijo(string $prefijo): Telefono
     {
         //TODO almacenar el prefijo siguiendo un estándar +34, +1-349
         $this->prefijo = $prefijo;
+        return $this;
     }
 
     public function getNumero(): string
@@ -29,9 +30,10 @@ class Telefono
         return $this->numero;
     }
 
-    public function setNumero(string $numero): void
+    public function setNumero(string $numero): Telefono
     {
         $this->numero = $numero;
+        return $this;
     }
 
 
