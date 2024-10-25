@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-md-4">
                 <article class="blog-post">
-                    <img src="View/template/assets/img/project5.jpg" alt="">
+                    <img src="<?=DIRECTORIO_RECURSOS?>img/project5.jpg" alt="">
                     <a href="#" class="tag">Web Design</a>
                     <div class="content">
                         <small>01 Dec, 2022</small>
@@ -25,7 +25,7 @@
             </div>
             <div class="col-md-4">
                 <article class="blog-post">
-                    <img src="View/template/assets/img/project4.jpg" alt="">
+                    <img src="<?=DIRECTORIO_RECURSOS?>img/project4.jpg" alt="">
                     <a href="#" class="tag">Programming</a>
                     <div class="content">
                         <small>01 Dec, 2022</small>
@@ -37,7 +37,7 @@
             </div>
             <div class="col-md-4">
                 <article class="blog-post">
-                    <img src="View/template/assets/img/project2.jpg" alt="">
+                    <img src="<?=DIRECTORIO_RECURSOS?>img/project2.jpg" alt="">
                     <a href="#" class="tag">Marketing</a>
                     <div class="content">
                         <small>01 Dec, 2022</small>

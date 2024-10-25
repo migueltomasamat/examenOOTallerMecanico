@@ -6,7 +6,7 @@
                 <div class="container-fluid">
                     <div class="row gy-4">
                         <div class="col-lg-4 col-sm-12 bg-cover"
-                             style="background-image: url(View/template/assets/img/c2.jpg); min-height:300px;">
+                             style="background-image: url(<?=DIRECTORIO_RECURSOS?>img/c2.jpg); min-height:300px;">
                             <div>
 
                             </div>

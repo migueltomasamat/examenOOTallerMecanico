@@ -13,7 +13,7 @@
         <div class="row g-4">
             <div class="col-lg-4 col-md-6">
                 <div class="service">
-                    <img src="View/template/assets/img/icon1.png" alt="">
+                    <img src="<?=DIRECTORIO_RECURSOS?>img/icon1.png" alt="">
                     <h5>Digital Marketing</h5>
                     <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of
                         classical Latin literature from</p>
@@ -21,7 +21,7 @@
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="service">
-                    <img src="View/template/assets/img/icon2.png" alt="">
+                    <img src="<?=DIRECTORIO_RECURSOS?>img/icon2.png" alt="">
                     <h5>Logo Designing</h5>
                     <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of
                         classical Latin literature from</p>
@@ -29,7 +29,7 @@
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="service">
-                    <img src="View/template/assets/img/icon3.png" alt="">
+                    <img src="<?=DIRECTORIO_RECURSOS?>img/icon3.png" alt="">
                     <h5>Buisness consulting</h5>
                     <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of
                         classical Latin literature from</p>
@@ -37,7 +37,7 @@
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="service">
-                    <img src="View/template/assets/img/icon4.png" alt="">
+                    <img src="<?=DIRECTORIO_RECURSOS?>img/icon4.png" alt="">
                     <h5>Videography</h5>
                     <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of
                         classical Latin literature from</p>
@@ -45,7 +45,7 @@
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="service">
-                    <img src="View/template/assets/img/icon5.png" alt="">
+                    <img src="<?=DIRECTORIO_RECURSOS?>img/icon5.png" alt="">
                     <h5>Brand Identity</h5>
                     <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of
                         classical Latin literature from</p>
@@ -53,7 +53,7 @@
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="service">
-                    <img src="View/template/assets/img/icon6.png" alt="">
+                    <img src="<?=DIRECTORIO_RECURSOS?>img/icon6.png" alt="">
                     <h5>Ethical Hacking</h5>
                     <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of
                         classical Latin literature from</p>

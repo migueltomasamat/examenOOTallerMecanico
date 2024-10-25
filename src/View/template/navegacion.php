@@ -12,17 +12,16 @@
                     <a class="nav-link" href="#home">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/View/about.php">Sobre Nosotros</a>
+                    <a class="nav-link" href="<?=DIRECTORIO_VISTAS?>about.php">Sobre Nosotros</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#services">Servicios</a>
+                    <a class="nav-link" href="<?=DIRECTORIO_VISTAS?>login.php">Servicios</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#portfolio">Clientes</a>
                 </li>
             </ul>
-            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"
-               class="btn btn-brand ms-lg-3">Contacto</a>
+            <a href="<?=DIRECTORIO_VISTAS?>login.php" class="btn btn-brand ms-lg-3">Inciar Sesión</a>
         </div>
     </div>
 </nav>

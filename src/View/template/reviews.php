@@ -21,7 +21,7 @@
         </div>
         <div class="review">
             <div class="person">
-                <img src="View/template/assets/img/team_2.jpg" alt="">
+                <img src="<?=DIRECTORIO_RECURSOS?>img/team_2.jpg" alt="">
                 <h5>Ralph Edwards</h5>
                 <small>Market Development Manager</small>
             </div>
@@ -39,7 +39,7 @@
         </div>
         <div class="review">
             <div class="person">
-                <img src="View/template/assets/img/team_3.jpg" alt="">
+                <img src="<?=DIRECTORIO_RECURSOS?>img/team_3.jpg" alt="">
                 <h5>Ralph Edwards</h5>
                 <small>Market Development Manager</small>
             </div>

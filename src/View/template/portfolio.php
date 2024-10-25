@@ -14,7 +14,7 @@
     <div id="projects-slider" class="owl-theme owl-carousel">
         <div class="project">
             <div class="overlay"></div>
-            <img src="img/project1.jpg" alt="">
+            <img src="<?=DIRECTORIO_RECURSOS?>img/project1.jpg" alt="">
             <div class="content">
                 <h2>Consulting Marketing</h2>
                 <h6>Website Design</h6>
@@ -22,7 +22,7 @@
         </div>
         <div class="project">
             <div class="overlay"></div>
-            <img src="View/template/assets/img/project2.jpg" alt="">
+            <img src="<?=DIRECTORIO_RECURSOS?>img/project2.jpg" alt="">
             <div class="content">
                 <h2>Consulting Marketing</h2>
                 <h6>Website Design</h6>
@@ -30,7 +30,7 @@
         </div>
         <div class="project">
             <div class="overlay"></div>
-            <img src="View/template/assets/img/project3.jpg" alt="">
+            <img src="<?=DIRECTORIO_RECURSOS?>img/project3.jpg" alt="">
             <div class="content">
                 <h2>Consulting Marketing</h2>
                 <h6>Website Design</h6>
@@ -38,7 +38,7 @@
         </div>
         <div class="project">
             <div class="overlay"></div>
-            <img src="View/template/assets/img/project4.jpg" alt="">
+            <img src="<?=DIRECTORIO_RECURSOS?>img/project4.jpg" alt="">
             <div class="content">
                 <h2>Consulting Marketing</h2>
                 <h6>Website Design</h6>
@@ -46,7 +46,7 @@
         </div>
         <div class="project">
             <div class="overlay"></div>
-            <img src="View/template/assets/img/project5.jpg" alt="">
+            <img src="<?=DIRECTORIO_RECURSOS?>img/project5.jpg" alt="">
             <div class="content">
                 <h2>Consulting Marketing</h2>
                 <h6>Website Design</h6>
