@@ -38,3 +38,5 @@ print_r($usuario->telefonos);
 
 echo "<br>";
 var_dump($usuario);
+
+phpinfo();

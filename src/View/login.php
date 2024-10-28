@@ -20,9 +20,9 @@ include_once "template/navegacion.php";
                 </div>
             </div>
         </div>
-        <div class="row g-4">
-            <div class="col-lg-6 col-md-8">
-                <div class="service">
+        <div class="row g-4 h-100">
+            <div class="col-lg-6 col-md-8 h-100">
+                <div class="service h-100">
                     <h5>Inciciar Sesión</h5>
                     <form method="post" action="/login">
                         <div class="mb-3">
@@ -37,7 +37,7 @@ include_once "template/navegacion.php";
                     </form>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-8">
+            <div class="col-lg-6 col-md-8 h-100">
                 <div class="service">
                 <h5>Registrarse como usuario</h5>
                 <form method="post" action="/register">
