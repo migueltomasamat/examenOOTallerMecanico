@@ -21,8 +21,10 @@ class UsuarioController
     }
 
     //GET /users/{id_usuario}/edit
-    public function edit(){
+    public function edit($id){
         //Mostraría un formulario con los datos del usuario
+        echo "Formulario para editar los datos del usuario $id";
+
     }
 
 
