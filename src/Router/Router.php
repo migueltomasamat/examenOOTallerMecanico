@@ -17,29 +17,31 @@ class Router
 
     public function resolver(string $metodohttp,string $url){
         //Lógica para crear una instancia y llamar al méthodo de la clase
-
-        echo $metodohttp."<br>".$url;
         $uriExplotada=explode('/',$url);
 
         //[UsuarioController::class,"edit"]=$this->rutas['GET']['/users/{id}/edit'];
 
         $accion=$this->rutas[$metodohttp][$this->cambiar_id_uri($url)];
 
-
         if (is_callable($accion)){
             //Tenemos que ejecutar una función anónima para mostrar una vista
             call_user_func($accion);
-        }else{
+        }elseif (count($uriExplotada)>2){
             [$clase,$metodo]=$accion;
             $instancia = new $clase();
             call_user_func_array([$instancia,$metodo],[$uriExplotada[2]]);
+        }else{
+            [$clase,$metodo]=$accion;
+            $instancia = new $clase();
+            call_user_func([$instancia,$metodo]);
         }
 
 
     }
     private function cambiar_id_uri(string $uri):string{
         $uriArray = explode('/',$uri);
-        if (is_numeric($uriArray[2])){
+        //var_dump($uriArray);
+        if (count($uriArray)>2 && is_numeric($uriArray[2])){
             $uriArray[2]="{id}";
         }
         return implode("/",$uriArray);

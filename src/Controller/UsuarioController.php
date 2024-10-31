@@ -1,23 +1,28 @@
 <?php
 
 namespace Controller;
+include_once "InterfaceController.php";
 
-class UsuarioController
+
+class UsuarioController implements InterfaceController
 {
 
     //GET /users
     public function index(){
-        include_once "../View/Users/indexUser.php";
+        include_once __DIR__."/../View/Users/indexUser.php";
     }
 
     //GET /users/create
     public function create(){
         //Aquí mostraríamos el formulario de registro
+        include_once __DIR__."/../View/Users/createUser.php";
+
     }
 
     //POST /users
     public function store(){
         //Guardaría en la base de datos el usuario
+        echo "Función para guardar un usuario";
     }
 
     //GET /users/{id_usuario}/edit
@@ -29,20 +34,24 @@ class UsuarioController
 
 
     //PUT /users/{id_usuario}
-    public function update(){
+    public function update($id){
         //Guardaría los datos modificados del usuario
+        echo "Función para actualizar los datos en la BD del usuario $id";
+
     }
 
 
     //GET /users/{id_usuario}
-    public function show(){
+    public function show($id){
         //Mostraría los datos de un solo usuario
+        echo "Mostar los datos del usuario $id";
     }
 
 
     //DELETE /users/{id_usuario}
-    public function destroy(){
+    public function destroy($id){
         //Borrar los datos de un usuario
+        echo "Función para borrar los datos del usuario $id";
     }
 
 }
