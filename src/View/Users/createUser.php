@@ -1,5 +1,5 @@
 <?php
-$titulo="ReserDAWtions";
+$titulo="Registro de usuario";
 include_once "./environment.php";
 include_once "View/template/inicio.php";
 include_once "View/template/arribaNavegacion.php";
