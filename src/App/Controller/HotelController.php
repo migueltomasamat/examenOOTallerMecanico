@@ -1,8 +1,8 @@
 <?php
 
-namespace Controller;
+namespace App\Controller;
 
-use Controller\InterfaceController;
+use App\Controller\InterfaceController;
 
 class HotelController implements InterfaceController
 {

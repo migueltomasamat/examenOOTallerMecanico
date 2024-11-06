@@ -1,6 +1,6 @@
 <?php
 
-namespace Class;
+namespace App\Class;
 
 class Telefono
 {

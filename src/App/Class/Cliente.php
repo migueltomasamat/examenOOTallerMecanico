@@ -1,7 +1,9 @@
 <?php
 
-namespace Class;
+namespace App\Class;
 
+
+use App\Class\Usuario;
 
 abstract class Cliente
 {

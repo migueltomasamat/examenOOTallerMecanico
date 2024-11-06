@@ -1,8 +1,10 @@
 <?php
 
-namespace Class;
+namespace App\Class;
 
-use Class\Enum\MetodoPago;
+use App\Class\Cliente;
+use App\Class\Enum\MetodoPago;
+use App\Class\Usuario;
 use DateTime;
 
 class Reserva

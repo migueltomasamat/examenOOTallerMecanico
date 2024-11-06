@@ -1,6 +1,8 @@
 <?php
 
-namespace Controller;
+namespace App\Controller;
+use App\Controller\InterfaceController;
+
 include_once "InterfaceController.php";
 
 class ClienteController implements InterfaceController

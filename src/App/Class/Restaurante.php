@@ -1,8 +1,8 @@
 <?php
 
-namespace Class;
+namespace App\Class;
 
-use Class\Cliente;
+use App\Class\Cliente;
 
 class Restaurante extends Cliente
 {

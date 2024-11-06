@@ -1,8 +1,8 @@
 <?php
-namespace Class;
+namespace App\Class;
 
 include_once "Enum/TipoUsuario.php";
-use Class\Enum\TipoUsuario;
+use App\Class\Enum\TipoUsuario;
 use DateTime;
 
 /**

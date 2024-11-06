@@ -1,6 +1,9 @@
 <?php
 
-namespace Controller;
+namespace App\Controller;
+use App\Controller\InterfaceController;
+use Ramsey\Uuid\Uuid;
+
 include_once "InterfaceController.php";
 
 
@@ -22,6 +25,14 @@ class UsuarioController implements InterfaceController
     //POST /users
     public function store(){
         //Guardaría en la base de datos el usuario
+
+
+        //Validación del usuario
+
+
+
+        //Creación del usuario
+        echo Uuid::uuid4();
         echo "Función para guardar un usuario";
     }
 
