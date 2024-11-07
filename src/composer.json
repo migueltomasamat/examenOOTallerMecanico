@@ -1,0 +1,19 @@
+{
+    "name": "matomas/proyecto2",
+    "description": "Proyecto de prueba",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Miguel A. Tomas",
+            "email": "ma.tomasamat@edu.gva.es"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "ramsey/uuid": "^4.7"
+    },
+    "autoload": {
+        "psr-4": {"App\\": "App/"}
+    }
+}
