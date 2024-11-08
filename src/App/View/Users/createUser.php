@@ -60,7 +60,6 @@ include_once DIRECTORIO_VISTAS."template/navegacion.php";
                     </div>
                 </div>
             </div>
-        </div>
     </section>
 
 <?php
