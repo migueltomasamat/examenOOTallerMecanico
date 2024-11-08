@@ -17,7 +17,7 @@
                     <a class="nav-link" href="/about">Sobre Nosotros</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/login">Servicios</a>
+                    <a class="nav-link" href="/services">Servicios</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/clientes">Clientes</a>

@@ -10,13 +10,25 @@ use App\Controller\ClienteController;
 $router = new Router();
 
 
-//Mostraria una landing page, una página estática
+//Rutas de páginas estáticas
 $router->addRoute('get','/',function(){
     include_once DIRECTORIO_VISTAS."landing.php";
 });
 $router->addRoute('get','/about',function(){
     include_once DIRECTORIO_VISTAS."about.php";
 });
+$router->addRoute('get','/login',function(){
+    include_once DIRECTORIO_VISTAS . "login.php";
+});
+
+$router->addRoute('get','/services',function(){
+    include_once DIRECTORIO_VISTAS . "services.php";
+});
+
+$router->addRoute('get','/contact',function(){
+    include_once DIRECTORIO_VISTAS."contacto.php";
+});
+
 
 //Rutas enlazadas a controladores, lógica de la aplicación
 //Usuarios

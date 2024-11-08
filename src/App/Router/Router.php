@@ -20,8 +20,13 @@ class Router
         $uriExplotada=explode('/',$url);
 
         //[UsuarioController::class,"edit"]=$this->rutas['GET']['/users/{id}/edit'];
+        if (isset($this->rutas[$metodohttp][$this->cambiar_id_uri($url)])){
+            $accion=$this->rutas[$metodohttp][$this->cambiar_id_uri($url)];
+        }else{
+            return include_once DIRECTORIO_VISTAS."404.php";
 
-        $accion=$this->rutas[$metodohttp][$this->cambiar_id_uri($url)];
+        }
+
 
         if (is_callable($accion)){
             //Tenemos que ejecutar una función anónima para mostrar una vista
