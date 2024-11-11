@@ -7,7 +7,7 @@ class Telefono
     private string $prefijo;
     private string $numero;
 
-    public function __construct(string $prefijo,string$numero)
+    public function __construct(string$numero,string $prefijo="+34")
     {
         $this->prefijo=$prefijo;
         $this->numero=$numero;
@@ -49,5 +49,23 @@ class Telefono
     {
         //TODO implementar la función para unir dos teléfonos según un formato (+34) 657 245 378
         return "telefono formateado";
+    }
+
+    public static function crearTelefonoDesdeString(string $telefono):Telefono{
+        $telefonoSinEspacios = trim($telefono);
+        $numero= Telefono::obtenerNumeroDeUnString($telefonoSinEspacios);
+        $prefijo = Telefono::obtenerPrefijoDeUnString($telefonoSinEspacios);
+        return new Telefono($numero,$prefijo);
+    }
+
+    private static function obtenerNumeroDeUnString(string $telefono):string{
+
+        return "falso";
+    }
+
+    private static function obtenerPrefijoDeUnString(string $telefono):string{
+
+
+        return "falso";
     }
 }

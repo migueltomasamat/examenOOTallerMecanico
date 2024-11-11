@@ -24,6 +24,10 @@ include_once DIRECTORIO_VISTAS."template/navegacion.php";
                                 <input class="form-control" id="user" name="usernick" type="text">
                             </div>
                             <div class="mb-3">
+                                <label class="form-label" for="dni">DNI del usuario</label>
+                                <input class="form-control" id="dni" name="userdni" type="text">
+                            </div>
+                            <div class="mb-3">
                                 <label class="form-label" for="name">Nombre de usuario</label>
                                 <input class="form-control" id="name" name="username" type="text">
                             </div>
