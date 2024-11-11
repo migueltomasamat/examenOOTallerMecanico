@@ -25,11 +25,16 @@ class UsuarioController implements InterfaceController
     //POST /users
     public function store(){
         //Guardaría en la base de datos el usuario
-        var_dump($_POST);
+        //var_dump($_POST);
 
 
         //Validación del usuario
-        var_dump(Usuario::filtrarDatosUsuario($_POST));
+        $errores=Usuario::filtrarDatosUsuario($_POST);
+        if (is_array($errores)){
+            include_once __DIR__."/../View/Users/errorUser.php";
+        }else{
+            Usuario::crearUsuarioAPartirDeUnArray($_POST);
+        }
 
 
         //Creación del usuario

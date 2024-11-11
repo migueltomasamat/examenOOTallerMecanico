@@ -360,7 +360,7 @@ class Usuario
         return 0.0;
     }
 
-    public static function filtrarDatosUsuario(array $datosUsuario):true|array
+    public static function filtrarDatosUsuario(array $datosUsuario):false|array
     {
         try {
 
@@ -380,7 +380,7 @@ class Usuario
             return $exception->getMessages();
         }
 
-        return true;
+        return false;
     }
 
     public static function crearUsuarioAPartirDeUnArray(array $datosUsuario):Usuario{
@@ -393,8 +393,6 @@ class Usuario
         $usuario->setPassword($datosUsuario['userpass']??"Sin password");
         $usuario->setDireccion($datosUsuario['useradress']??"Sin direccion");
         $usuario->setDni($datosUsuario['userdni']??"00000000A");
-
-
 
 
 

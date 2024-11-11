@@ -41,8 +41,7 @@ class Telefono
 
     public static function comprobarPrefijo(string $prefijo):bool{
 
-        //TODO implementar la funcion para comprobar un prefijo de teléfono
-        return false;
+        return isset($prefijos[$prefijo])?true:false;
     }
 
     public function obtenerTelefonoFormateado():string
