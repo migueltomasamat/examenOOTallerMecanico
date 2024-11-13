@@ -4,6 +4,12 @@ const DIRECTORIO_RECURSOS = "/App/View/template/assets/";
 const DIRECTORIO_VISTAS = "App/View/";
 
 const DIRECTORIO_CONTROLADOR = "App/Controller/";
+const NOMBRE_CONTAINER_DATABASE = "mariadboo";
+const NOMBRE_DATABASE = "reserdawtions";
+
+const USUARIO_DATABASE = "miguel";
+
+const PASS_DATABASE = "leugim";
 
 
 $prefijos = [

@@ -393,7 +393,19 @@ class Usuario
         $usuario->setPassword($datosUsuario['userpass']??"Sin password");
         $usuario->setDireccion($datosUsuario['useradress']??"Sin direccion");
         $usuario->setDni($datosUsuario['userdni']??"00000000A");
+        $usuario->setFechanac(DateTime::createFromFormat('d/m/Y',$datosUsuario['userbirthdate']));
+        $telefonos=[];
 
+        if (isset($datosUsuario['userphone'])){
+            $telefono=Telefono::crearTelefonoDesdeString($datosUsuario['userphone']);
+            $telefonos[]=$telefono;
+        }
+        if (isset($datosUsuario['useraltphone'])){
+            $telefono=Telefono::crearTelefonoDesdeString($datosUsuario['useraltphone']);
+            $telefonos[]=$telefono;
+        }
+
+        $usuario->setTelefonos($telefonos);
 
 
         return $usuario;

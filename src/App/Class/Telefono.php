@@ -50,21 +50,57 @@ class Telefono
         return "telefono formateado";
     }
 
-    public static function crearTelefonoDesdeString(string $telefono):Telefono{
+    public static function crearTelefonoDesdeString(string $telefono):?Telefono{
         $telefonoSinEspacios = trim($telefono);
         $numero= Telefono::obtenerNumeroDeUnString($telefonoSinEspacios);
         $prefijo = Telefono::obtenerPrefijoDeUnString($telefonoSinEspacios);
-        return new Telefono($numero,$prefijo);
+
+        if ($prefijo==null && $numero==null){
+            return null;
+        }elseif($numero==null){
+            return null;
+        }elseif($prefijo==null){
+            return new Telefono($numero);
+        }else{
+            return new Telefono($numero,$prefijo);
+        }
+
+
+
     }
 
-    private static function obtenerNumeroDeUnString(string $telefono):string{
+    private static function obtenerNumeroDeUnString(string $telefono):?string{
+        $telefonoSinEspacios=trim($telefono);
+        if (strlen($telefonoSinEspacios)<9){
+            return null;
+        }elseif(strlen($telefonoSinEspacios)==9){
+            return $telefonoSinEspacios;
+        }else{
+            return substr($telefonoSinEspacios,-9);
 
-        return "falso";
+        }
     }
 
-    private static function obtenerPrefijoDeUnString(string $telefono):string{
+    private static function obtenerPrefijoDeUnString(string $telefono):?string{
+
+        if (strlen($telefono)>9){
+            $telefonoSinEspacios=trim($telefono);
+            $posicionDondeEmpiezaElTelefono = strlen($telefonoSinEspacios)-9;
+            $prefijo=substr($telefonoSinEspacios,0,$posicionDondeEmpiezaElTelefono);
+            $prefijoSinMierdas="";
+
+            for($i=0;$i<strlen($prefijo);$i++){
+                if (is_numeric($prefijo[$i])){
+                    $prefijoSinMierdas.=$prefijo[$i];
+                }
+            }
+
+            return $prefijoSinMierdas;
+        }else {
+            return null;
+        }
 
 
-        return "falso";
+
     }
 }
