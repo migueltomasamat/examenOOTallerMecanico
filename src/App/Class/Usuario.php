@@ -49,11 +49,11 @@ class Usuario
     /**
      * @var array
      */
-    public array $telefonos;
+    public ?array $telefonos;
     /**
      * @var array
      */
-    public array $reservas;
+    public ?array $reservas;
     /**
      * @var float|int
      */
@@ -61,11 +61,11 @@ class Usuario
     /**
      * @var string
      */
-    private string $tarjetaPago;
+    private ?string $tarjetaPago;
     /**
      * @var array
      */
-    public array $datosAdicionales;
+    public ?array $datosAdicionales;
     /**
      * @var TipoUsuario
      */
@@ -78,9 +78,10 @@ class Usuario
      */
     public function __construct()
     {
-        $this->reservas=array();
-        $this->telefonos=array();
-        $this->datosAdicionales=array();
+        $this->reservas=null;
+        $this->telefonos=null;
+        $this->datosAdicionales=null;
+        $this->tarjetaPago=null;
         $this->calificacion=3;
         $this->tipo=TipoUsuario::USER;
     }
@@ -232,7 +233,7 @@ class Usuario
     /**
      * @return array
      */
-    public function getTelefonos(): array
+    public function getTelefonos(): ?array
     {
         return $this->telefonos;
     }
@@ -250,7 +251,7 @@ class Usuario
     /**
      * @return array
      */
-    public function getReservas(): array
+    public function getReservas(): ?array
     {
         return $this->reservas;
     }
@@ -286,7 +287,7 @@ class Usuario
     /**
      * @return string
      */
-    public function getTarjetaPago(): string
+    public function getTarjetaPago(): ?string
     {
         return $this->tarjetaPago;
     }
@@ -304,7 +305,7 @@ class Usuario
     /**
      * @return array
      */
-    public function getDatosAdicionales(): array
+    public function getDatosAdicionales(): ?array
     {
         return $this->datosAdicionales;
     }

@@ -28,16 +28,43 @@ class UsuarioModel
 
         $conexion= UsuarioModel::conectarBD();
 
-        echo $conexion->getAttribute(PDO::ATTR_CONNECTION_STATUS)."<br>";
-        echo $conexion->getAttribute(PDO::ATTR_DRIVER_NAME)."<br>";
 
         //Creación de la consulta SQL
+        $sql = "INSERT INTO user(uuid,
+                 username,
+                 password,
+                 dni,
+                 correoelectronico,
+                 fechanac,
+                 nombre,
+                 apellidos,
+                 direccion,
+                 califacion,
+                 tarjetapago,
+                 datosadicionales,
+                 tipo) values(:uuid,:username,:password,:dni,:correoelectronico,STR_TO_DATE(:fechanac,'%d/%m/%Y'),
+                              :nombre,:apellidos,:direccion,:calificacion,:tarjetapago,
+                              :datosadicionales,:tipo)";
 
+        $sentenciaPreparada= $conexion->prepare($sql);
 
         //Enlazado de parámetros dentro de la consulta
-
+        $sentenciaPreparada->bindValue("uuid",$usuario->getUuid());
+        $sentenciaPreparada->bindValue("username",$usuario->getUsername());
+        $sentenciaPreparada->bindValue("password",$usuario->getPassword());
+        $sentenciaPreparada->bindValue("dni",$usuario->getDni());
+        $sentenciaPreparada->bindValue("correoelectronico",$usuario->getCorreoelectronico());
+        $sentenciaPreparada->bindValue("fechanac",$usuario->getFechanac()->format('d/m/Y'));
+        $sentenciaPreparada->bindValue("nombre",$usuario->getNombre());
+        $sentenciaPreparada->bindValue("apellidos",$usuario->getApellidos());
+        $sentenciaPreparada->bindValue("direccion",$usuario->getDireccion());
+        $sentenciaPreparada->bindValue("calificacion",$usuario->getCalificacion());
+        $sentenciaPreparada->bindValue("tarjetapago",$usuario->getTarjetaPago());
+        $sentenciaPreparada->bindValue("datosadicionales",$usuario->getDatosAdicionales());
+        $sentenciaPreparada->bindValue("tipo",$usuario->getTipo()->name);
 
         //Ejecución de la consulta contra la base de datos
+        $sentenciaPreparada->execute();
 
     }
 }
