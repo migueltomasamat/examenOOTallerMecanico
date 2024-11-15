@@ -46,7 +46,11 @@ class UsuarioModel
                               :nombre,:apellidos,:direccion,:calificacion,:tarjetapago,
                               :datosadicionales,:tipo)";
 
+        $sqltelefono= "INSERT INTO telefono(prefijo,numero,uuid_usuario)
+                        VALUES (:prefijo,:numero,:uuid_usuario)";
+
         $sentenciaPreparada= $conexion->prepare($sql);
+        $sentenciaPreparadaTelefono = $conexion->prepare($sqltelefono);
 
         //Enlazado de parámetros dentro de la consulta
         $sentenciaPreparada->bindValue("uuid",$usuario->getUuid());
@@ -64,7 +68,21 @@ class UsuarioModel
         $sentenciaPreparada->bindValue("tipo",$usuario->getTipo()->name);
 
         //Ejecución de la consulta contra la base de datos
+        //Necesitamos guardar el usuario antes de guardar el telefono para que la FK funcione
         $sentenciaPreparada->execute();
 
+        //Realizamos un bucle para guardar todos los telefonos asociados
+        foreach ($usuario->getTelefonos() as $telefono){
+            $sentenciaPreparadaTelefono->bindValue("prefijo",$telefono->getPrefijo());
+            $sentenciaPreparadaTelefono->bindValue("numero",$telefono->getNumero());
+            $sentenciaPreparadaTelefono->bindValue("uuid_usuario",$usuario->getUuid());
+            $sentenciaPreparadaTelefono->execute();
+        }
+
     }
+
+    public static function borrarUsuario(string $uuidUsuario){
+
+    }
+
 }

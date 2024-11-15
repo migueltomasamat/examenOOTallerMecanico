@@ -31,7 +31,8 @@ create table telefono(
 //
 /*Creación de claves primarias*/
 alter table user add constraint pk_user primary key (uuid);
-alter table user add constraint uk_user unique (dni);
+alter table user add constraint uk_user_dni unique (dni);
+alter table user add constraint uk_user_correo unique (correoelectronico);
 //
 /*alter table telefono add constraint pk_telefono primary key (id);*/
 

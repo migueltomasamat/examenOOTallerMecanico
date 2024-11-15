@@ -7,13 +7,13 @@ class Telefono
     private string $prefijo;
     private string $numero;
 
-    public function __construct(string$numero,string $prefijo="+34")
+    public function __construct(string$numero,string $prefijo="34")
     {
         $this->prefijo=$prefijo;
         $this->numero=$numero;
     }
 
-    public function getPrefijo(): string
+    public function getPrefijo(): ?string
     {
         return $this->prefijo;
     }

@@ -35,7 +35,9 @@ class UsuarioController implements InterfaceController
 
         var_dump($usuario);
 
-        UsuarioModel::guardarUsuario($usuario);
+        $usuario->save();
+
+        //UsuarioModel::guardarUsuario($usuario);
 
         //Creación del usuario
         echo "Función para guardar un usuario";

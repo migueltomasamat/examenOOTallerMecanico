@@ -3,6 +3,7 @@ namespace App\Class;
 
 include_once "Enum/TipoUsuario.php";
 use App\Class\Enum\TipoUsuario;
+use App\Model\UsuarioModel;
 use DateTime;
 use Ramsey\Uuid\Uuid;
 use Respect\Validation\Validator;
@@ -13,6 +14,9 @@ use Respect\Validation\Exceptions\NestedValidationException;
  */
 class Usuario
 {
+    /**
+     * @var string
+     */
     private string $uuid;
     /**
      * @var string
@@ -118,7 +122,7 @@ class Usuario
      */
     public function setPassword(string $password):Usuario
     {
-        $this->password = $password;
+        $this->password = password_hash($password,PASSWORD_DEFAULT);
         return $this;
     }
 
@@ -337,11 +341,19 @@ class Usuario
         $this->tipo = $tipo;
         return $this;
     }
+
+    /**
+     * @return string
+     */
     public function getUuid(): string
     {
         return $this->uuid;
     }
 
+    /**
+     * @param string $uuid
+     * @return $this
+     */
     public function setUuid(string $uuid): Usuario
     {
         $this->uuid = $uuid;
@@ -361,6 +373,10 @@ class Usuario
         return 0.0;
     }
 
+    /**
+     * @param array $datosUsuario
+     * @return false|array
+     */
     public static function filtrarDatosUsuario(array $datosUsuario):false|array
     {
         try {
@@ -384,14 +400,21 @@ class Usuario
         return false;
     }
 
+    /**
+     * @param array $datosUsuario
+     * @return Usuario
+     */
     public static function crearUsuarioAPartirDeUnArray(array $datosUsuario):Usuario{
+
         $usuario = new Usuario();
         $usuario->setUuid(Uuid::uuid4());
         $usuario->setUsername($datosUsuario['usernick']??"Sin nick");
         $usuario->setNombre($datosUsuario['username']??"Sin nombre");
         $usuario->setApellidos($datosUsuario['usersurname']??"Sin apellidos");
         $usuario->setCorreoelectronico($datosUsuario['useremail']??"Sin nombre");
-        $usuario->setPassword($datosUsuario['userpass']??"Sin password");
+
+        //Además de almacenar el password lo encriptamos
+        $usuario->setPassword(password_hash($datosUsuario['userpass'],PASSWORD_DEFAULT)??"Sin password");
         $usuario->setDireccion($datosUsuario['useradress']??"Sin direccion");
         $usuario->setDni($datosUsuario['userdni']??"00000000A");
         $usuario->setFechanac(DateTime::createFromFormat('d/m/Y',$datosUsuario['userbirthdate']));
@@ -410,6 +433,13 @@ class Usuario
 
 
         return $usuario;
+    }
+
+    /**
+     * @return void
+     */
+    public function save(){
+        UsuarioModel::guardarUsuario($this);
     }
 
 
