@@ -8,11 +8,12 @@ use DateTime;
 use Ramsey\Uuid\Uuid;
 use Respect\Validation\Validator;
 use Respect\Validation\Exceptions\NestedValidationException;
+use JsonSerializable;
 
 /**
  *
  */
-class Usuario
+class Usuario implements JsonSerializable
 {
     /**
      * @var string
@@ -318,10 +319,19 @@ class Usuario
      * @param array $datosAdicionales
      * @return $this
      */
-    public function setDatosAdicionales(array $datosAdicionales): Usuario
+    public function setDatosAdicionales(string|array $datosAdicionales): Usuario
     {
-        $this->datosAdicionales = $datosAdicionales;
+        if(is_string($datosAdicionales)){
+            //Nos ha llegado una cadena JSON
+            $this->datosAdicionales=json_decode($datosAdicionales,true);
+
+        }else{
+            //Nos ha llegado un array con los datos adicionales de un usuario
+            $this->datosAdicionales = $datosAdicionales;
+
+        }
         return $this;
+
     }
 
     /**
@@ -360,6 +370,22 @@ class Usuario
         return $this;
     }
 
+    public function jsonSerialize(): array
+    {
+        return [
+            'useruuid'=>$this->uuid,
+            'usernick'=>$this->username,
+            'username'=>$this->nombre,
+            'usersurname'=>$this->apellidos,
+            'useremail'=>$this->correoelectronico,
+            'useradress'=>$this->direccion,
+            'userdni'=>$this->dni,
+            'usercard'=>$this->tarjetaPago,
+            'userdata'=>json_encode($this->datosAdicionales),
+            'usermark'=>$this->calificacion,
+            'userphones'=>$this->telefonos
+        ];
+    }
 
     //Espacio para funciones definidas por el programador
 
@@ -391,6 +417,7 @@ class Usuario
                 ->key('useradress', Validator::stringType())
                 ->key('userphone', Validator::phone())
                 ->key('useraltphone', Validator::optional(Validator::phone()),false)
+                ->key('userdata', Validator::optional(Validator::json()),mandatory: false)
                 ->assert($datosUsuario);
 
         } catch (NestedValidationException $exception) {
@@ -418,6 +445,8 @@ class Usuario
         $usuario->setDireccion($datosUsuario['useradress']??"Sin direccion");
         $usuario->setDni($datosUsuario['userdni']??"00000000A");
         $usuario->setFechanac(DateTime::createFromFormat('d/m/Y',$datosUsuario['userbirthdate']));
+        $usuario->setDatosAdicionales($datosUsuario['userdata']??'Sin datos');
+
         $telefonos=[];
 
         if (isset($datosUsuario['userphone'])){
@@ -432,6 +461,7 @@ class Usuario
         $usuario->setTelefonos($telefonos);
 
 
+
         return $usuario;
     }
 
@@ -440,6 +470,14 @@ class Usuario
      */
     public function save(){
         UsuarioModel::guardarUsuario($this);
+    }
+
+    public function edit(){
+        UsuarioModel::editarUsuario($this);
+    }
+
+    public function delete(){
+        UsuarioModel::borrarUsuario($this);
     }
 
 

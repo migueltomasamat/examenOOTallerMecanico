@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Class;
+use JsonSerializable;
 
-class Telefono
+class Telefono implements JsonSerializable
 {
     private string $prefijo;
     private string $numero;
@@ -102,5 +103,12 @@ class Telefono
 
 
 
+    }
+    public function jsonSerialize(): array
+    {
+        return [
+            'prefijo'=>$this->prefijo,
+            'numero'=>$this->numero
+        ];
     }
 }

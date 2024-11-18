@@ -40,6 +40,9 @@ $router->addRoute('put','/users/{id}',[\App\Controller\UsuarioController::class,
 $router->addRoute('get','/users/{id}',[\App\Controller\UsuarioController::class,'show']);
 $router->addRoute('delete','/users/{id}',[\App\Controller\UsuarioController::class,'destroy']);
 
+//Usuario API
+$router->addRoute('post','/api/users',[\App\Controller\UsuarioController::class,'store']);
+
 //Clientes
 $router->addRoute('get','/clients',[\App\Controller\ClienteController::class,'index']);
 $router->addRoute('get','/clients/create',[\App\Controller\ClienteController::class,'create']);

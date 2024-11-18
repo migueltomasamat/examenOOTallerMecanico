@@ -2,6 +2,7 @@
 
 namespace App\Model;
 use App\Class\Usuario;
+use App\Excepcions\DeleteUserException;
 use PDO;
 use PDOException;
 
@@ -64,7 +65,7 @@ class UsuarioModel
         $sentenciaPreparada->bindValue("direccion",$usuario->getDireccion());
         $sentenciaPreparada->bindValue("calificacion",$usuario->getCalificacion());
         $sentenciaPreparada->bindValue("tarjetapago",$usuario->getTarjetaPago());
-        $sentenciaPreparada->bindValue("datosadicionales",$usuario->getDatosAdicionales());
+        $sentenciaPreparada->bindValue("datosadicionales",json_encode($usuario->getDatosAdicionales()));
         $sentenciaPreparada->bindValue("tipo",$usuario->getTipo()->name);
 
         //Ejecución de la consulta contra la base de datos
@@ -81,8 +82,22 @@ class UsuarioModel
 
     }
 
-    public static function borrarUsuario(string $uuidUsuario){
+    public static function borrarUsuario(string $uuidUsuario):bool{
+        $conexion = UsuarioModel::conectarBD();
 
+        $sql = "DELETE FROM user WHERE uuid=?";
+
+        $sentenciaPreparada = $conexion->prepare($sql);
+
+        $sentenciaPreparada->bindValue(1,$uuidUsuario);
+
+        $sentenciaPreparada->execute();
+
+        //Gestionar los errores de ejecución
+        if($sentenciaPreparada->rowCount()==0){
+            throw new DeleteUserException();
+        }else{
+            return true;
+        }
     }
-
 }
