@@ -434,18 +434,24 @@ class Usuario implements JsonSerializable
     public static function crearUsuarioAPartirDeUnArray(array $datosUsuario):Usuario{
 
         $usuario = new Usuario();
-        $usuario->setUuid(Uuid::uuid4());
+        $usuario->setUuid($datosUsuario['useruuid']??Uuid::uuid4());
         $usuario->setUsername($datosUsuario['usernick']??"Sin nick");
         $usuario->setNombre($datosUsuario['username']??"Sin nombre");
         $usuario->setApellidos($datosUsuario['usersurname']??"Sin apellidos");
         $usuario->setCorreoelectronico($datosUsuario['useremail']??"Sin nombre");
 
         //Además de almacenar el password lo encriptamos
+        //TODO gestionar password recibido de la base de datos
         $usuario->setPassword(password_hash($datosUsuario['userpass'],PASSWORD_DEFAULT)??"Sin password");
         $usuario->setDireccion($datosUsuario['useradress']??"Sin direccion");
         $usuario->setDni($datosUsuario['userdni']??"00000000A");
         $usuario->setFechanac(DateTime::createFromFormat('d/m/Y',$datosUsuario['userbirthdate']));
         $usuario->setDatosAdicionales($datosUsuario['userdata']??'Sin datos');
+        $usuario->setCalificacion($datosUsuario['usermark']??0.0);
+        $usuario->setTarjetaPago($datosUsuario['usercard']??"Sin tarjeta");
+        //TODO convertir string de la base de datos en tipo
+        //$usuario->setTipo($datosUsuario['usertype']??TipoUsuario::GUEST);
+
 
         $telefonos=[];
 

@@ -3,6 +3,7 @@
 namespace App\Model;
 use App\Class\Usuario;
 use App\Excepcions\DeleteUserException;
+use App\Excepcions\ReadUserException;
 use PDO;
 use PDOException;
 
@@ -31,23 +32,23 @@ class UsuarioModel
 
 
         //Creación de la consulta SQL
-        $sql = "INSERT INTO user(uuid,
+        $sql = "INSERT INTO user(useruuid,
+                 usernick,
+                 userpass,
+                 userdni,
+                 useremail,
+                 userbirthdate,
                  username,
-                 password,
-                 dni,
-                 correoelectronico,
-                 fechanac,
-                 nombre,
-                 apellidos,
-                 direccion,
-                 califacion,
-                 tarjetapago,
-                 datosadicionales,
-                 tipo) values(:uuid,:username,:password,:dni,:correoelectronico,STR_TO_DATE(:fechanac,'%d/%m/%Y'),
+                 usersurname,
+                 useradress,
+                 usermark,
+                 usercard,
+                 userdata,
+                 usertype) values(:uuid,:username,:password,:dni,:correoelectronico,STR_TO_DATE(:fechanac,'%d/%m/%Y'),
                               :nombre,:apellidos,:direccion,:calificacion,:tarjetapago,
                               :datosadicionales,:tipo)";
 
-        $sqltelefono= "INSERT INTO telefono(prefijo,numero,uuid_usuario)
+        $sqltelefono= "INSERT INTO phone(phoneprefix,phonenumber,useruuid)
                         VALUES (:prefijo,:numero,:uuid_usuario)";
 
         $sentenciaPreparada= $conexion->prepare($sql);
@@ -85,7 +86,7 @@ class UsuarioModel
     public static function borrarUsuario(string $uuidUsuario):bool{
         $conexion = UsuarioModel::conectarBD();
 
-        $sql = "DELETE FROM user WHERE uuid=?";
+        $sql = "DELETE FROM user WHERE useruuid=?";
 
         $sentenciaPreparada = $conexion->prepare($sql);
 
@@ -99,5 +100,32 @@ class UsuarioModel
         }else{
             return true;
         }
+    }
+
+    public static function leerUsuario($uuidUsuario):?Usuario{
+        //Crear una conexión con la base de datos
+        $conexion = UsuarioModel::conectarBD();
+
+        //Crear una variable con la sentencia SQL que queremos ejecutar
+        $sql = "SELECT useruuid,username,usersurname,userpass,useremail,useradress,DATE_FORMAT(userbirthdate,'%d/%m/%Y') as userbirthdate,usernick,usercard,userdata,usertype,usermark FROM user where useruuid=:uuid";
+
+        //Preparar la sentencia a ejecutar
+        $sentenciaPreparada=$conexion->prepare($sql);
+
+        //Hacer la asignación de los parametros de la SQL al valor
+        $sentenciaPreparada->bindValue('uuid',$uuidUsuario);
+
+        //Ejecutar la consulta con los parametros ya cambiados en la base de datos
+        $sentenciaPreparada->execute();
+
+        if($sentenciaPreparada->rowCount()===0){
+            //Se ha producido un error
+            throw new ReadUserException();
+        }else{
+            //Leer de la base datos un usuario
+            $datosUsuario = $sentenciaPreparada->fetch(PDO::FETCH_ASSOC);
+            return Usuario::crearUsuarioAPartirDeUnArray($datosUsuario);
+        }
+
     }
 }

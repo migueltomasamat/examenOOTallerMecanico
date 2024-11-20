@@ -34,11 +34,7 @@ class UsuarioController implements InterfaceController
             $usuario=Usuario::crearUsuarioAPartirDeUnArray($_POST);
         }
 
-        //var_dump($usuario);
-
         $usuario->save();
-
-        //UsuarioModel::guardarUsuario($usuario);
 
         //Creación del usuario
         echo json_encode($usuario);
@@ -63,7 +59,12 @@ class UsuarioController implements InterfaceController
     //GET /users/{id_usuario}
     public function show($id){
         //Mostraría los datos de un solo usuario
-        echo "Mostar los datos del usuario $id";
+        if (!Uuid::isValid($id)){
+            //Mostrar un error id en formato invalido
+        }else{
+            var_dump(UsuarioModel::leerUsuario($id));
+        }
+
     }
 
 
