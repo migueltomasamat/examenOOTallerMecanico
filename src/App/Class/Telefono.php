@@ -70,6 +70,14 @@ class Telefono implements JsonSerializable
 
     }
 
+    public static function crearTelefonosDesdeUnArray(array $telefonos):array{
+        $arrayObjetosTelefono=[];
+        foreach ($telefonos as $telefono){
+            $arrayObjetosTelefono[]=new Telefono($telefono['phonenumber'],$telefono['phoneprefix']);
+        }
+        return $arrayObjetosTelefono;
+    }
+
     private static function obtenerNumeroDeUnString(string $telefono):?string{
         $telefonoSinEspacios=trim($telefono);
         if (strlen($telefonoSinEspacios)<9){
@@ -100,9 +108,6 @@ class Telefono implements JsonSerializable
         }else {
             return null;
         }
-
-
-
     }
     public function jsonSerialize(): array
     {

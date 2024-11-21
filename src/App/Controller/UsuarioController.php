@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Class\Usuario;
 use App\Controller\InterfaceController;
 use App\Excepcions\DeleteUserException;
+use App\Excepcions\ReadUserException;
 use App\Model\UsuarioModel;
 use Ramsey\Uuid\Uuid;
 include_once "InterfaceController.php";
@@ -51,7 +52,21 @@ class UsuarioController implements InterfaceController
     //PUT /users/{id_usuario}
     public function update($id){
         //Guardaría los datos modificados del usuario
-        echo "Función para actualizar los datos en la BD del usuario $id";
+        $usuario = UsuarioModel::leerUsuario($id);
+
+        //Leer de un ficheros de datos los valore de PUT
+        //No existe $_PUT
+
+        //Filtraremos esos datos
+
+        //Almacenar los cambios en la base de datos
+        try{
+            //UsuarioModel::editarUsuario($usuario);
+            $usuario->edit();
+
+        }catch (EditUserException $e){
+            $e->getMessage();
+        }
 
     }
 
@@ -62,9 +77,13 @@ class UsuarioController implements InterfaceController
         if (!Uuid::isValid($id)){
             //Mostrar un error id en formato invalido
         }else{
-            var_dump(UsuarioModel::leerUsuario($id));
-        }
+            try{
+                UsuarioModel::leerUsuario($id);
+            }catch(ReadUserException $e){
+                $e->getMessage();
+            }
 
+        }
     }
 
 

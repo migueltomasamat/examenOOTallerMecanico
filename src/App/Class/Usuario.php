@@ -123,7 +123,7 @@ class Usuario implements JsonSerializable
      */
     public function setPassword(string $password):Usuario
     {
-        $this->password = password_hash($password,PASSWORD_DEFAULT);
+        $this->password = $password;
         return $this;
     }
 
@@ -440,9 +440,14 @@ class Usuario implements JsonSerializable
         $usuario->setApellidos($datosUsuario['usersurname']??"Sin apellidos");
         $usuario->setCorreoelectronico($datosUsuario['useremail']??"Sin nombre");
 
-        //Además de almacenar el password lo encriptamos
-        //TODO gestionar password recibido de la base de datos
-        $usuario->setPassword(password_hash($datosUsuario['userpass'],PASSWORD_DEFAULT)??"Sin password");
+        if (password_get_info($datosUsuario['userpass'])['algo']=='2y'){
+            //Lectura de la base de datos con el password ya encriptado
+            $usuario->setPassword($datosUsuario['userpass']);
+        }else{
+            //Obtenermos los datos del formulario
+            $usuario->setPassword(password_hash($datosUsuario['userpass'],PASSWORD_DEFAULT)??"Sin password");
+        }
+
         $usuario->setDireccion($datosUsuario['useradress']??"Sin direccion");
         $usuario->setDni($datosUsuario['userdni']??"00000000A");
         $usuario->setFechanac(DateTime::createFromFormat('d/m/Y',$datosUsuario['userbirthdate']));
@@ -450,7 +455,9 @@ class Usuario implements JsonSerializable
         $usuario->setCalificacion($datosUsuario['usermark']??0.0);
         $usuario->setTarjetaPago($datosUsuario['usercard']??"Sin tarjeta");
         //TODO convertir string de la base de datos en tipo
-        //$usuario->setTipo($datosUsuario['usertype']??TipoUsuario::GUEST);
+        $usuario->setTipo(TipoUsuario::convertirStringATipoUsuario(
+            $datosUsuario['usertype']??null)??TipoUsuario::GUEST
+        );
 
 
         $telefonos=[];
@@ -474,12 +481,14 @@ class Usuario implements JsonSerializable
     /**
      * @return void
      */
-    public function save(){
+    public function save():Usuario{
         UsuarioModel::guardarUsuario($this);
+        return $this;
     }
 
-    public function edit(){
+    public function edit():Usuario{
         UsuarioModel::editarUsuario($this);
+        return $this;
     }
 
     public function delete(){
