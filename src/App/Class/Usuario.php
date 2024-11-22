@@ -403,29 +403,13 @@ class Usuario implements JsonSerializable
      * @param array $datosUsuario
      * @return false|array
      */
-    public static function filtrarDatosUsuario(array $datosUsuario):false|array
+    public static function filtrarDatosUsuarioParaCrear(array $datosUsuario):false|array
     {
-        try {
 
-            Validator::key('usernick', Validator::stringType()->notEmpty()->length(3, null))
-                ->key('username', Validator::stringType())
-                ->key('userdni', Validator::stringType()->length(9,9))
-                ->key('usersurname', Validator::stringType())
-                ->key('userpass', Validator::stringType()->length(8, null))
-                ->key('useremail', Validator::email())
-                ->key('userbirthdate', Validator::date('d/m/Y')->minAge(18, 'd/m/Y'))
-                ->key('useradress', Validator::stringType())
-                ->key('userphone', Validator::phone())
-                ->key('useraltphone', Validator::optional(Validator::phone()),false)
-                ->key('userdata', Validator::optional(Validator::json()),mandatory: false)
-                ->assert($datosUsuario);
-
-        } catch (NestedValidationException $exception) {
-            return $exception->getMessages();
-        }
 
         return false;
     }
+
 
     /**
      * @param array $datosUsuario

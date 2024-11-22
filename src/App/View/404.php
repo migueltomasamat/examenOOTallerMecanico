@@ -1,5 +1,4 @@
 <?php
-
 $titulo="Página no encontrada";
 include_once DIRECTORIO_VISTAS."template/inicio.php";
 include_once DIRECTORIO_VISTAS."template/arribaNavegacion.php";

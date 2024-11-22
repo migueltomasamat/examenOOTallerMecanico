@@ -152,7 +152,7 @@ class UsuarioModel
                      userpass=:userpass,
                      userdni=:userdni,
                      useremail=:useremail,
-                     userbirthdate=:userbirthdate,
+                     userbirthdate=STR_TO_DATE(:userbirthdate,'%d/%m/%Y'),
                      username=:username,
                      usersurname=:usersurname,
                      useradress=:useradress,
@@ -168,7 +168,7 @@ class UsuarioModel
         $sentenciaPreparada->bindValue("userpass",$usuario->getPassword());
         $sentenciaPreparada->bindValue("userdni",$usuario->getDni());
         $sentenciaPreparada->bindValue("useremail",$usuario->getCorreoelectronico());
-        $sentenciaPreparada->bindValue("userbirtdate",$usuario->getFechanac()->format('d/m/Y'));
+        $sentenciaPreparada->bindValue("userbirthdate",$usuario->getFechanac()->format('d/m/Y'));
         $sentenciaPreparada->bindValue("username",$usuario->getNombre());
         $sentenciaPreparada->bindValue("usersurname",$usuario->getApellidos());
         $sentenciaPreparada->bindValue("useradress",$usuario->getDireccion());
