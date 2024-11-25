@@ -23,7 +23,17 @@
                     <a class="nav-link" href="/clientes">Clientes</a>
                 </li>
             </ul>
-            <a href="/login" class="btn btn-brand ms-lg-3">Inciar Sesión</a>
+            <?php if (isset($_SESSION['username'])){?>
+
+                      <a class='nav-item text-decoration-none m-1' href='#'>Hola, <?=$_SESSION['username']?></a>
+
+                    <a href='/logout' class='btn btn-brand ms-lg-1'>Log Out</a>
+                <?php
+                }else{?>
+                <a href="/login" class="btn btn-brand ms-lg-3">Inciar Sesión</a>
+
+            <?php } ?>
+
         </div>
     </div>
 </nav>

@@ -24,7 +24,7 @@ include_once "template/navegacion.php";
             <div class="col-lg-6 col-md-8 h-100">
                 <div class="service h-100">
                     <h5>Inciciar Sesión</h5>
-                    <form method="post" action="/login">
+                    <form method="post" action="/users/verify">
                         <div class="mb-3">
                             <label class="form-label" for="user">Nombre de usuario</label>
                             <input class="form-control" id="user" name="username" type="text">
@@ -33,7 +33,7 @@ include_once "template/navegacion.php";
                             <label class="form-label" for="pass">Contraseña</label>
                             <input class="form-control" id="pass" name="userpass" type="password">
                         </div>
-                        <input class="btn btn-brand ms-lg-3" type="button" value="Enviar">
+                        <input class="btn btn-brand ms-lg-3" type="submit" value="Enviar">
                     </form>
                 </div>
             </div>

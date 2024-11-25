@@ -178,4 +178,31 @@ class UsuarioController implements InterfaceController
         }
     }
 
+    public function verify(){
+        //Tenemos que leer los datos del usuario que me han llegado por $_POST
+        if (isset($_POST['username']) && isset($_POST['userpass'])){
+            //Tenemos que verificar que el usuario exista y que la contrasña sea correcta
+            $usuario= UsuarioModel::comprobarUsuario($_POST['username']);
+            if (password_verify($_POST['userpass'],$usuario->getPassword())){
+               //session_start();
+               $_SESSION['username']=$usuario->getUsername();
+               header('Location: /');
+               exit();
+            }else{
+                $errores=['Login invalido'];
+                //TODO modificar la vista Login para que se muestren los errores y se rellene el usuario
+                echo "pass_incorrecto";
+            }
+
+            //Tenemos que guardar en la session $_SESSION algo
+            // que nos permita identificar que el usuario está logeado
+        }else{
+            $errores=['Login invalido'];
+            //TODO modificar la vista Login para que se muestren los errores y se rellene el usuario
+            echo "usuario incorrecto";
+        }
+
+
+    }
+
 }

@@ -7,6 +7,10 @@ use App\Router\Router;
 use App\Controller\UsuarioController;
 use App\Controller\ClienteController;
 
+setcookie("ultima","index",time()+3600,"/","localhost",false,true);
+session_start();
+
+
 $router = new Router();
 
 
@@ -29,6 +33,11 @@ $router->addRoute('get','/contact',function(){
     include_once DIRECTORIO_VISTAS."contacto.php";
 });
 
+$router->addRoute("get","/logout",function(){
+    unset($_SESSION['username']);
+    session_destroy();
+    header('Location: /');
+});
 
 //Rutas enlazadas a controladores, lógica de la aplicación
 //Usuarios
@@ -39,6 +48,9 @@ $router->addRoute('get','/users/{id}/edit',[\App\Controller\UsuarioController::c
 $router->addRoute('put','/users/{id}',[\App\Controller\UsuarioController::class,'update']);
 $router->addRoute('get','/users/{id}',[\App\Controller\UsuarioController::class,'show']);
 $router->addRoute('delete','/users/{id}',[\App\Controller\UsuarioController::class,'destroy']);
+
+$router->addRoute('post','/users/verify',[UsuarioController::class,'verify']);
+
 
 //Usuario API
 $router->addRoute('post','/api/users',[\App\Controller\UsuarioController::class,'store']);

@@ -1,4 +1,5 @@
 <?php
+//session_start();
 $titulo="ReserDAWtions";
 include_once "./environment.php";
 include_once "template/inicio.php";

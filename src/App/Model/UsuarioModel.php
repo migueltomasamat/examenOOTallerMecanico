@@ -184,8 +184,27 @@ class UsuarioModel
         }else{
             return $usuario;
         }
+    }
 
+    public static function comprobarUsuario(string $username):false|Usuario{
+        $conexion = UsuarioModel::conectarBD();
 
+        $sql = "SELECT useruuid from user where usernick=?";
+
+        $sentenciaPreparada= $conexion->prepare($sql);
+
+        //Forma abreviada de ejecutar una consulta
+        $sentenciaPreparada->execute([$username]);
+
+        if ($sentenciaPreparada->rowCount()==0){
+            return false;
+        }else{
+            $datosUsuario = $sentenciaPreparada->fetch(PDO::FETCH_ASSOC);
+            return UsuarioModel::leerUsuario($datosUsuario['useruuid']);
+        }
 
     }
+
+
+
 }
