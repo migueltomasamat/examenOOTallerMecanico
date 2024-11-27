@@ -39,6 +39,58 @@ $router->addRoute("get","/logout",function(){
     header('Location: /');
 });
 
+$router->addRoute("post","/modificaruser",function(){
+    //Tomar los datos de post y realizar la petición PUT
+
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'http://localhost/users/'.$_POST['useruuid'],
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'PUT',
+        CURLOPT_POSTFIELDS => 'usernick='.$_POST['usernick'].
+                                '&userpass='.$_POST['userpass'].
+                                '&userdni='.$_POST['userdni'].
+                                '&username='.$_POST['username'].
+                                '&usersurname='.$_POST['usersurname'].
+                                '&useradress='.$_POST['useradress'].
+                                '&useremail='.$_POST['useremail'].
+                                '&userbirthdate='.$_POST['userbirthdate'].
+                                '&userphone='.$_POST['userphone'].
+                                '&useraltphone='.$_POST['useraltphone'],
+        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/x-www-form-urlencoded'
+        ),
+    ));
+    $response = curl_exec($curl);
+
+    curl_close($curl);
+    if ($response==''){
+        header('Location: /users/'.$_POST['useruuid']."/edit");
+        exit();
+    }
+});
+
+$router->addRoute('get','/borraruser',function(){
+
+    $client = new \GuzzleHttp\Client();
+    $request = new \GuzzleHttp\Psr7\Request('DELETE', 'http://localhost/users/'.$GET['useruuid']);
+    $res = $client->sendAsync($request)->wait();
+    var_dump($res->getBody());
+
+    unset($_SESSION['user']);
+    session_destroy();
+    header("Location: /");
+    exit();
+
+});
+
+
 //Rutas enlazadas a controladores, lógica de la aplicación
 //Usuarios
 $router->addRoute('get','/users',[\App\Controller\UsuarioController::class,'index']);

@@ -68,8 +68,17 @@ class UsuarioController implements InterfaceController
 
     //GET /users/{id_usuario}/edit
     public function edit($id){
-        //Mostraría un formulario con los datos del usuario
-        echo "Formulario para editar los datos del usuario $id";
+       //Comprobar que el usuario exista y cargar los datos
+        $usuario=UsuarioModel::leerUsuario($id);
+        if (!$usuario){
+            $errores[]="Usuario no encontrado";
+            include_once DIRECTORIO_VISTAS."errores.php";
+            exit();
+        }else{
+            include_once DIRECTORIO_VISTAS."Users/editUser.php";
+        }
+
+
 
     }
 
@@ -145,6 +154,7 @@ class UsuarioController implements InterfaceController
         try{
             //UsuarioModel::editarUsuario($usuario);
             $usuario->edit();
+            return true;
 
         }catch (EditUserException $e){
             $e->getMessage();
@@ -170,11 +180,10 @@ class UsuarioController implements InterfaceController
         //Borrar los datos de un usuario
         try {
             UsuarioModel::borrarUsuario($id);
-            echo "Borrado correcto";
+            return true;
         }catch (DeleteUserException $e){
             $errores[]=$e->getMessage();
             include_once DIRECTORIO_VISTAS."errores.php";
-
         }
     }
 

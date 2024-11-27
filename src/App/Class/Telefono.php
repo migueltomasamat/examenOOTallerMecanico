@@ -47,8 +47,7 @@ class Telefono implements JsonSerializable
 
     public function obtenerTelefonoFormateado():string
     {
-        //TODO implementar la función para unir dos teléfonos según un formato (+34) 657 245 378
-        return "telefono formateado";
+        return "+".$this->prefijo." ".$this->numero;
     }
 
     public static function crearTelefonoDesdeString(string $telefono):?Telefono{
