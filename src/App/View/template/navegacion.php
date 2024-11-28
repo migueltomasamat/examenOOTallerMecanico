@@ -25,7 +25,7 @@
             </ul>
             <?php if (isset($_SESSION['username'])){?>
 
-                      <a class='nav-item text-decoration-none m-1' href='#'>Hola, <?=$_SESSION['username']?></a>
+                      <a class='nav-item text-decoration-none m-1' href='/users/<?=$_SESSION['useruuid']?>/edit'>Hola, <?=$_SESSION['username']?></a>
 
                     <a href='/logout' class='btn btn-brand ms-lg-1'>Log Out</a>
                 <?php

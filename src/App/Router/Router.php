@@ -16,6 +16,9 @@ class Router
     }
 
     public function resolver(string $metodohttp,string $url){
+        //Comprobamos si es una ruta con API y si es quitamos de la URL el /api
+        $api= $this->comprobarRutaAPI($url);
+
         //Lógica para crear una instancia y llamar al méthodo de la clase
         $uriExplotada=explode('/',$url);
 
@@ -34,11 +37,11 @@ class Router
         }elseif (count($uriExplotada)>2){
             [$clase,$metodo]=$accion;
             $instancia = new $clase();
-            call_user_func_array([$instancia,$metodo],[$uriExplotada[2]]);
+            call_user_func_array([$instancia,$metodo],[$uriExplotada[2],$api]);
         }else{
             [$clase,$metodo]=$accion;
             $instancia = new $clase();
-            call_user_func([$instancia,$metodo]);
+            call_user_func_array([$instancia,$metodo],[$api]);
         }
 
 
@@ -50,5 +53,21 @@ class Router
             $uriArray[2]="{id}";
         }
         return implode("/",$uriArray);
+    }
+
+    private function comprobarRutaAPI(string &$url):bool{
+        $api=false;
+        $rutaACachos= explode('/',$url);
+        if ($rutaACachos[1]=='api'){
+            $rutaACachos=array_splice($rutaACachos,2,2);
+            $rutaACachos=array_reverse($rutaACachos);
+            $rutaACachos[]='';
+            $rutaACachos=array_reverse($rutaACachos);
+            $rutaCortada=implode('/',$rutaACachos);
+            $url=$rutaCortada;
+            return true;
+        }else{
+            return false;
+        }
     }
 }

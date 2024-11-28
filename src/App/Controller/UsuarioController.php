@@ -19,20 +19,21 @@ class UsuarioController implements InterfaceController
 {
 
     //GET /users
-    public function index(){
+    public function index($api){
         include_once __DIR__."/../View/Users/indexUser.php";
     }
 
     //GET /users/create
-    public function create(){
+    public function create($api){
         //Aquí mostraríamos el formulario de registro
         include_once __DIR__."/../View/Users/createUser.php";
 
     }
 
     //POST /users
-    public function store(){
+    public function store($api){
         //Validación del usuario
+        $errores='';
         try {
 
             Validator::key('usernick', Validator::stringType()->notEmpty()->length(3, null))
@@ -63,11 +64,21 @@ class UsuarioController implements InterfaceController
         $usuario->save();
 
         //Creación del usuario
-        echo json_encode($usuario);
+        if ($api){
+            http_response_code(201);
+            header('Content-Type: application/json');
+            echo json_encode($usuario);
+        }else{
+            $informacion=['Se ha creado el usuario correctamente'];
+            $_SESSION['username']=$usuario->getUsername();
+            $_SESSION['useruuid']=$usuario->getUuid();
+            include_once DIRECTORIO_VISTAS."informacion.php";
+        }
+
     }
 
     //GET /users/{id_usuario}/edit
-    public function edit($id){
+    public function edit($id,$api){
        //Comprobar que el usuario exista y cargar los datos
         $usuario=UsuarioModel::leerUsuario($id);
         if (!$usuario){
@@ -84,7 +95,7 @@ class UsuarioController implements InterfaceController
 
 
     //PUT /users/{id_usuario}
-    public function update($id){
+    public function update($id,$api){
         //Guardaría los datos modificados del usuario
         $usuario = UsuarioModel::leerUsuario($id);
 
@@ -154,34 +165,79 @@ class UsuarioController implements InterfaceController
         try{
             //UsuarioModel::editarUsuario($usuario);
             $usuario->edit();
-            return true;
+            if ($api){
+                http_response_code(204);
+                header('Content-Type: application/json');
+                echo json_encode($usuario);
+            }else{
+                return true;
+            }
+
 
         }catch (EditUserException $e){
-            $e->getMessage();
+            if ($api){
+                http_response_code(404);
+                header('Content-Type: application/json');
+                echo json_encode([
+                    "mensaje"=>'El usuario no se ha podido editar'
+                ]);
+            }else{
+                $e->getMessage();
+            }
+
         }
 
     }
 
 
     //GET /users/{id_usuario}
-    public function show($id){
+    public function show($id, $api){
         //Mostraría los datos de un solo usuario
         try{
-            UsuarioModel::leerUsuario($id);
+            $usuario=UsuarioModel::leerUsuario($id);
+            if ($api){
+                http_response_code(200);
+                header('Content-Type: application/json');
+                echo json_encode($usuario);
+            }
         }catch(ReadUserException $e){
-            $errores[]=$e->getMessage();
-            include_once DIRECTORIO_VISTAS."errores.php";
+            if($api){
+                http_response_code(400);
+                header('Content-Type: application/json');
+                echo json_encode([
+                    "mensaje"=>"El usuario no se ha podido leer"
+                ]);
+            }else{
+                $errores[]=$e->getMessage();
+                include_once DIRECTORIO_VISTAS."errores.php";
+            }
+
         }
     }
 
 
     //DELETE /users/{id_usuario}
-    public function destroy($id){
+    public function destroy($id,$api){
         //Borrar los datos de un usuario
         try {
             UsuarioModel::borrarUsuario($id);
+            //Si api==false
+            if ($api){
+                http_response_code(200);
+                header('Content-Type: application/json');
+                echo json_encode([
+                    "mensaje"=>"El usuario ha sido borrado correctamente"
+                ]);
+            }
             return true;
         }catch (DeleteUserException $e){
+            if($api){
+                http_response_code(400);
+                header('Content-Type: application/json');
+                echo json_encode([
+                    "mensaje"=>"El usuario NO ha sido borrado"
+                ]);
+            }
             $errores[]=$e->getMessage();
             include_once DIRECTORIO_VISTAS."errores.php";
         }
@@ -195,6 +251,7 @@ class UsuarioController implements InterfaceController
             if (password_verify($_POST['userpass'],$usuario->getPassword())){
                //session_start();
                $_SESSION['username']=$usuario->getUsername();
+               $_SESSION['useruuid']=$usuario->getUuid();
                header('Location: /');
                exit();
             }else{

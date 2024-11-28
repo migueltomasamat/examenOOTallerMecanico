@@ -5,7 +5,6 @@ include_once "vendor/autoload.php";
 
 use App\Router\Router;
 use App\Controller\UsuarioController;
-use App\Controller\ClienteController;
 
 setcookie("ultima","index",time()+3600,"/","localhost",false,true);
 session_start();
@@ -79,11 +78,11 @@ $router->addRoute("post","/modificaruser",function(){
 $router->addRoute('get','/borraruser',function(){
 
     $client = new \GuzzleHttp\Client();
-    $request = new \GuzzleHttp\Psr7\Request('DELETE', 'http://localhost/users/'.$GET['useruuid']);
+    $request = new \GuzzleHttp\Psr7\Request('DELETE', 'http://localhost/users/'.$_SESSION['useruuid']);
     $res = $client->sendAsync($request)->wait();
-    var_dump($res->getBody());
 
-    unset($_SESSION['user']);
+    unset($_SESSION['username']);
+    unset($_SESSION['useruuid']);
     session_destroy();
     header("Location: /");
     exit();
@@ -105,7 +104,13 @@ $router->addRoute('post','/users/verify',[UsuarioController::class,'verify']);
 
 
 //Usuario API
-$router->addRoute('post','/api/users',[\App\Controller\UsuarioController::class,'store']);
+$router->addRoute('post','/api/users/{id}',[\App\Controller\UsuarioController::class,'store']);
+$router->addRoute('get','/api/users/{id}',[\App\Controller\UsuarioController::class,'index']);
+$router->addRoute('put','/api/users/{id}',[\App\Controller\UsuarioController::class,'update']);
+$router->addRoute('delete','/api/users/{id}',[\App\Controller\UsuarioController::class,'destroy']);
+
+
+
 
 //Clientes
 $router->addRoute('get','/clients',[\App\Controller\ClienteController::class,'index']);
