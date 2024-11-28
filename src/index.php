@@ -88,6 +88,23 @@ $router->addRoute('get','/borraruser',function(){
     exit();
 
 });
+$router->addRoute('get','/ia',function(){
+    $client = \ArdaGnsrn\Ollama\Ollama::client('http://ollama:11434');
+
+    $usuario = \App\Model\UsuarioModel::leerUsuario('0ceb27b1-6281-4b28-b3b3-ac7507ba7c00');
+
+    $response = $client->chat()->create([
+        'model' => 'tinyllama',
+        'messages' => [
+            ['role' => 'system', 'content' => 'Eres una IA para una Web de Reservas'],
+            ['role' => 'user', 'content' => 'Hola!'],
+            ['role' => 'assistant', 'content' => 'Crea una clasificacion del 1 al 100 de lo completos que son los datos del usuario que recibirás a continuación'],
+            ['role' => 'user', 'content' => json_encode($usuario)],
+        ],
+    ]);
+
+    echo $response->message->content;
+});
 
 
 //Rutas enlazadas a controladores, lógica de la aplicación

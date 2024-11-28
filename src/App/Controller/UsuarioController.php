@@ -166,7 +166,7 @@ class UsuarioController implements InterfaceController
             //UsuarioModel::editarUsuario($usuario);
             $usuario->edit();
             if ($api){
-                http_response_code(204);
+                http_response_code(200);
                 header('Content-Type: application/json');
                 echo json_encode($usuario);
             }else{
