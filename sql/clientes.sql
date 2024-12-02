@@ -1,9 +1,8 @@
 DELIMITER //
-// Eliminar tablas si ya existen
-DROP TABLE IF EXISTS phone CASCADE;
+/* Eliminar tablas si ya existen */
 DROP TABLE IF EXISTS client CASCADE;
 
-// Creación de la tabla client
+/*Creación de la tabla client */
 CREATE TABLE client (
                         clientuuid VARCHAR(36),
                         clientname VARCHAR(100) NOT NULL,
