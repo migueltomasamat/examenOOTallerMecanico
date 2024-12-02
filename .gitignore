@@ -1,3 +1,5 @@
-.idea
+/.idea
 
-./src/vendor
+/src/vendor
+/.docker/mariadb
+/.docker/ollama
