@@ -1,0 +1,4 @@
+/.idea
+/src/vendor
+/.docker/mariadb
+/.docker/ollama
