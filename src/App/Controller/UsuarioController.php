@@ -170,7 +170,7 @@ class UsuarioController implements InterfaceController
                 header('Content-Type: application/json');
                 echo json_encode($usuario);
             }else{
-                return true;
+                echo '';
             }
 
 

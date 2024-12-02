@@ -435,7 +435,7 @@ class Usuario implements JsonSerializable
         $usuario->setDireccion($datosUsuario['useradress']??"Sin direccion");
         $usuario->setDni($datosUsuario['userdni']??"00000000A");
         $usuario->setFechanac(DateTime::createFromFormat('d/m/Y',$datosUsuario['userbirthdate']));
-        $usuario->setDatosAdicionales($datosUsuario['userdata']??'Sin datos');
+        $usuario->setDatosAdicionales($datosUsuario['userdata']??'{}');
         $usuario->setCalificacion($datosUsuario['usermark']??0.0);
         $usuario->setTarjetaPago($datosUsuario['usercard']??"Sin tarjeta");
         //TODO convertir string de la base de datos en tipo

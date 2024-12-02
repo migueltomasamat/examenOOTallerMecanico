@@ -70,8 +70,8 @@ $router->addRoute("post","/modificaruser",function(){
 
     curl_close($curl);
     if ($response==''){
-        header('Location: /users/'.$_POST['useruuid']."/edit");
-        exit();
+        $informacion=['Usuario modificado correctamente'];
+        include_once DIRECTORIO_VISTAS."informacion.php";
     }
 });
 
