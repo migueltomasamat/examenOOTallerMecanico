@@ -3,8 +3,12 @@
 namespace App\Model;
 
 use App\Class\Cliente;
+use App\Class\Telefono;
+use App\Excepcions\EditClientException;
+use App\Excepcions\ReadClientException;
 use PDO;
 use PDOException;
+use App\Excepcions\DeleteClientException;
 
 class ClienteModel
 {
@@ -23,7 +27,7 @@ class ClienteModel
     }
 
     public static function guardarCliente(Cliente $cliente){
-        // TODO
+
         //Crear una conexión con la base de datos
         $conexion = ClienteModel::conectarBD();
 
@@ -49,7 +53,7 @@ class ClienteModel
 
         //Enlazado de parámetros dentro de la consulta
         $sentenciaPreparada->bindValue("uuid",$cliente->getUuid());
-        $sentenciaPreparada->bindValue("usuario",$cliente->getUsuario());
+        $sentenciaPreparada->bindValue("usuario",$cliente->getUsuario()->getUuid());
         $sentenciaPreparada->bindValue("nombre",$cliente->getNombre());
         $sentenciaPreparada->bindValue("direccion",$cliente->getDireccion());
         $sentenciaPreparada->bindValue("abierto",$cliente->isAbierto());
@@ -66,23 +70,57 @@ class ClienteModel
             $sentenciaPreparadaTelefono->bindValue("uuid_usuario",$cliente->getUuid());
             $sentenciaPreparadaTelefono->execute();
         }
-
     }
 
     public static function borrarCliente(string $uuidCliente):bool{
-        // TODO
+
         //Crear una conexión con la base de datos
         $conexion = ClienteModel::conectarBD();
 
-        return false;
+        $sql = "DELETE FROM client WHERE useruuid=?";
+
+        $sentenciaPreparada = $conexion->prepare($sql);
+
+        $sentenciaPreparada->bindValue(1,$uuidCliente);
+
+        $sentenciaPreparada->execute();
+
+        //Gestionar los errores de ejecución
+        if($sentenciaPreparada->rowCount()==0){
+            throw new DeleteClientException();
+        }else{
+            return true;
+        }
     }
 
     public static function editarCliente(Cliente $cliente):?Cliente{
-        // TODO
+
         //Crear una conexión con la base de datos
         $conexion = ClienteModel::conectarBD();
+        $sql = "UPDATE client SET 
+                 clientuuid=:clientuuid,
+                 useruuid=:useruuid,
+                 clientname=:clientname,
+                 clientaddress=:clientaddress,
+                 clientisopen=:clientisopen,
+                 clientcost=:clientcost";
 
-        return null;
+        $sentenciaPreparada=$conexion->prepare($sql);
+
+        $sentenciaPreparada->bindValue("clientuuid",$cliente->getUuid());
+        $sentenciaPreparada->bindValue("useruuid",$cliente->getUsuario()->getUuid());
+        $sentenciaPreparada->bindValue("clientname",$cliente->getNombre());
+        $sentenciaPreparada->bindValue("clientaddress",$cliente->getDireccion());
+        $sentenciaPreparada->bindValue("clientisopen",$cliente->isAbierto());
+        $sentenciaPreparada->bindValue("clientcost",$cliente->getCoste());
+
+        $sentenciaPreparada->execute();
+
+        if ($sentenciaPreparada->rowCount()==0){
+            throw new EditClientException();
+        }else{
+            return $cliente;
+        }
     }
 
     public static function leerUsuario($uuidCliente):?Cliente{
@@ -90,7 +128,43 @@ class ClienteModel
         //Crear una conexión con la base de datos
         $conexion = ClienteModel::conectarBD();
 
-        return null;
+        $sql = "SELECT 
+                    clientuuid,
+                    clientname,
+                    clientaddress,
+                    clientisopen,
+                    clientcost,
+                    useruuid FROM client where clientuuid=:clientuuid";
+
+        //Preparar la sentencia a ejecutar
+        $sentenciaPreparada=$conexion->prepare($sql);
+
+        //Hacer la asignación de los parametros de la SQL al valor
+        $sentenciaPreparada->bindValue('uuid',$uuidCliente);
+
+        //Ejecutar la consulta con los parametros ya cambiados en la base de datos
+        $sentenciaPreparada->execute();
+
+        if($sentenciaPreparada->rowCount()===0){
+            //Se ha producido un error
+            throw new ReadClientException();
+        }else{
+            //Leer de la base datos un usuario
+            $datosCliente = $sentenciaPreparada->fetch(PDO::FETCH_ASSOC);
+
+            //Creamos la consulta necesaria para conseguir los telefonos de la tabla phone
+            $sqlTelefonos = "SELECT phoneprefix,phonenumber FROM phone WHERE useruuid=?"; // <<-- NO ESTOY SEGURO
+            $sentenciaTelefonos = $conexion->prepare($sqlTelefonos);
+            $sentenciaTelefonos->execute([$uuidCliente]);
+            $telefonos=
+                Telefono::crearTelefonosDesdeUnArray(
+                    $sentenciaTelefonos->fetchAll(PDO::FETCH_ASSOC));
+
+            // TODO crear cliente a partir de un array
+            $cliente=Cliente::crearClienteAPartirDeUnArray($datosCliente);
+            $cliente->setTelefonos($telefonos);
+            return $cliente;
+        }
     }
 
     public static function comprobarCliente(string $uuidCliente):false|Cliente{
