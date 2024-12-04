@@ -18,7 +18,6 @@ class Router
     public function resolver(string $metodohttp,string $url){
         //Comprobamos si es una ruta con API y si es quitamos de la URL el /api
         $api= $this->comprobarRutaAPI($url);
-
         //Lógica para crear una instancia y llamar al méthodo de la clase
         $uriExplotada=explode('/',$url);
 
@@ -56,7 +55,6 @@ class Router
     }
 
     private function comprobarRutaAPI(string &$url):bool{
-        $api=false;
         $rutaACachos= explode('/',$url);
         if ($rutaACachos[1]=='api'){
             $rutaACachos=array_splice($rutaACachos,2,2);

@@ -64,7 +64,7 @@ include_once DIRECTORIO_VISTAS."template/navegacion.php";
                                 echo "";
                             } ?>">
                         </div>
-                        <input class="btn btn-brand ms-lg-3" value="Enviar" type="submit">
+                        <input class="btn btn-brand ms-lg-3" value="Modificar" type="submit">
                         <a href="/borraruser" class="btn btn-danger ms-lg-5">Borrar Usuario</a>
                     </form>
                 </div>

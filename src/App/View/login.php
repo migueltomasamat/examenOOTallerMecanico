@@ -37,26 +37,6 @@ include_once "template/navegacion.php";
                     </form>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-8 h-100">
-                <div class="service">
-                <h5>Registrarse como usuario</h5>
-                <form method="post" action="/register">
-                    <div class="mb-3">
-                        <label class="form-label" for="user">Nombre de usuario</label>
-                        <input class="form-control" id="user" name="username" type="text">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="pass">Contraseña</label>
-                        <input class="form-control" id="pass" name="userpass" type="password">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="email">Correo electrónico</label>
-                        <input class="form-control" id="email" name="useremail" type="email">
-                    </div>
-                    <input class="btn btn-brand ms-lg-3" type="button" value="Enviar">
-                </form>
-                </div>
-            </div>
         </div>
     </div>
 </section>
