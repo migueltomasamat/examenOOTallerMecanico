@@ -16,12 +16,13 @@ include_once "template/navegacion.php";
             <div class="col-12">
                 <div class="intro">
                     <h1>Iniciar Sesión</h1>
-                    <p class="mx-auto">Inicia sesión o regístrate para gestionar todas tus reservas</p>
+                    <p class="mx-auto">No tienes cuenta todavía.</p>
+                    <p class="mx-auto"><a href="/users/create" class="btn btn-primary">Registro</a></p>
                 </div>
             </div>
         </div>
         <div class="row g-4 h-100">
-            <div class="col-lg-6 col-md-8 h-100">
+            <div class="col">
                 <div class="service h-100">
                     <h5>Inciciar Sesión</h5>
                     <form method="post" action="/users/verify">
