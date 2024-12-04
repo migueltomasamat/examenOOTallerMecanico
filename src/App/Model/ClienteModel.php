@@ -27,7 +27,7 @@ class ClienteModel
         //Crear una conexión con la base de datos
         $conexion = ClienteModel::conectarBD();
 
-        //Creación de la consulta SQL
+        //Creación de la consulta SQL de los clientes.
         $sql = "INSERT INTO client(clientuuid,
                  useruuid,
                  clientname,
@@ -40,6 +40,32 @@ class ClienteModel
                                     :clientisopen,
                                     :clientcost)";
 
+        /* Creación de la consulta Telefono */
+        $sqltelefono= "INSERT INTO phone(phoneprefix,phonenumber,useruuid)
+                        VALUES (:prefijo,:numero,:uuid_usuario)";
+
+        $sentenciaPreparada= $conexion->prepare($sql);
+        $sentenciaPreparadaTelefono = $conexion->prepare($sqltelefono);
+
+        //Enlazado de parámetros dentro de la consulta
+        $sentenciaPreparada->bindValue("uuid",$cliente->getUuid());
+        $sentenciaPreparada->bindValue("usuario",$cliente->getUsuario());
+        $sentenciaPreparada->bindValue("nombre",$cliente->getNombre());
+        $sentenciaPreparada->bindValue("direccion",$cliente->getDireccion());
+        $sentenciaPreparada->bindValue("abierto",$cliente->isAbierto());
+        $sentenciaPreparada->bindValue("coste",$cliente->getCoste());
+
+        //Ejecución de la consulta contra la base de datos
+        //Necesitamos guardar el usuario antes de guardar el telefono para que la FK funcione
+        $sentenciaPreparada->execute();
+
+        //Realizamos un bucle para guardar todos los telefonos asociados
+        foreach ($cliente->getTelefonos() as $telefono){
+            $sentenciaPreparadaTelefono->bindValue("prefijo",$telefono->getPrefijo());
+            $sentenciaPreparadaTelefono->bindValue("numero",$telefono->getNumero());
+            $sentenciaPreparadaTelefono->bindValue("uuid_usuario",$cliente->getUuid());
+            $sentenciaPreparadaTelefono->execute();
+        }
 
     }
 
