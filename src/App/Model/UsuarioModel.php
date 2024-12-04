@@ -227,7 +227,17 @@ class UsuarioModel
         $usuarios=$resultado->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($usuarios as $usuario){
-            $arrayUsuarios[]=Usuario::crearUsuarioAPartirDeUnArray($usuario);
+            $usuario=Usuario::crearUsuarioAPartirDeUnArray($usuario);
+            $sql = "SELECT phoneprefix,phonenumber FROM phone WHERE useruuid=?";
+            $stmt= $conexion->prepare($sql);
+            $stmt->execute([$usuario->getuuid()]);
+            $telefonos= $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($telefonos as $telefono){
+                $arrayTelefonos[]=new Telefono($telefono['phonenumber'],$telefono['phoneprefix']);
+            }
+            $usuario->setTelefonos($arrayTelefonos);
+            $arrayTelefonos=array();
+            $arrayUsuarios[]=$usuario;
         }
 
         return $arrayUsuarios;

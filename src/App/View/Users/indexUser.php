@@ -24,7 +24,7 @@ include_once DIRECTORIO_VISTAS."template/navegacion.php";
                             <li>
                                 <?php
                                 foreach ($usuario->getTelefonos() as $telefono){
-                                    echo $telefono->obtenerTelefonoFormateado();
+                                    echo $telefono->obtenerTelefonoFormateado()." ";
                                 }
                                 ?>
                             </li>

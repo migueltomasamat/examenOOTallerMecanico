@@ -23,6 +23,7 @@ class UsuarioController implements InterfaceController
         $usuarios= UsuarioModel::obtenerUsuarios();
         if ($api){
             http_response_code(200);
+            header('Content-Type: application/json');
             echo json_encode($usuarios);
         }else{
             include_once DIRECTORIO_VISTAS."Users/indexUser.php";
