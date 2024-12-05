@@ -124,7 +124,7 @@ class ClienteModel
     }
 
     public static function leerUsuario($uuidCliente):?Cliente{
-        // TODO
+
         //Crear una conexión con la base de datos
         $conexion = ClienteModel::conectarBD();
 
@@ -160,20 +160,32 @@ class ClienteModel
                 Telefono::crearTelefonosDesdeUnArray(
                     $sentenciaTelefonos->fetchAll(PDO::FETCH_ASSOC));
 
-            // TODO crear cliente a partir de un array
+
             $cliente=Cliente::crearClienteAPartirDeUnArray($datosCliente);
             $cliente->setTelefonos($telefonos);
             return $cliente;
+
         }
     }
 
-    public static function comprobarCliente(string $uuidCliente):false|Cliente{
-        // TODO
+    public static function comprobarCliente(string $clientname):false|Cliente{
+
         //Crear una conexión con la base de datos
         $conexion = ClienteModel::conectarBD();
 
+        $sql = "SELECT clientuuid from client where clientname=?";
+
+        $sentenciaPreparada= $conexion->prepare($sql);
+
+        //Forma abreviada de ejecutar una consulta
+        $sentenciaPreparada->execute([$clientname]);
+
+        if ($sentenciaPreparada->rowCount()==0){
+            return false;
+        }else{
+            $datosCliente = $sentenciaPreparada->fetch(PDO::FETCH_ASSOC);
+            return ClienteModel::leerCliente($datosCliente['clientuuid']);
+        }
         return false;
     }
-
-
 }
