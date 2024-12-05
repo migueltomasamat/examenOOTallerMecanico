@@ -17,14 +17,14 @@ class ClienteController implements InterfaceController
 {
     //GET /clients
     public function index($api){
-        //include_once __DIR__."../View/Users/indexClient.php";
+        include_once DIRECTORIO_VISTAS."/Users/indexClient.php";
     }
 
     //GET /clients/create
     public function create($api){
         //Aquí mostraríamos el formulario de registro
         echo "Formulario de registro de un cliente";
-        //include_once __DIR__."/../View/Users/createClient.php";
+        //include_once DIRECTORIO_VISTAS."/Users/createClient.php";
     }
 
     //POST /clients
@@ -46,7 +46,7 @@ class ClienteController implements InterfaceController
 
         //Comprobamos si ha habido errores
         if (is_array($errores)){
-            include_once __DIR__."/../View/Users/errorClient.php";
+            include_once DIRECTORIO_VISTAS."/Users/errorClient.php";
         }else{
             $cliente=Usuario::crearClienteAPartirDeUnArray($_POST);
         }
@@ -110,7 +110,7 @@ class ClienteController implements InterfaceController
                 echo json_encode(['errors' => $errores]);
                 return;
             } else {
-                include_once __DIR__ . '/../View/Clients/errorClient.php';
+                include_once DIRECTORIO_VISTAS . '/Clients/errorClient.php';
                 return;
             }
         }
@@ -141,14 +141,14 @@ class ClienteController implements InterfaceController
 
 
     //GET /clients/{id_usuario}
-    public function show($id){
+    public function show($id, $api){
         //Mostraría los datos de un solo usuario
         echo "Mostar los datos del cliente $id";
     }
 
 
     //DELETE /clients/{id_usuario}
-    public function destroy($id){
+    public function destroy($id, $api){
         //Borrar los datos de un usuario
         echo "Función para borrar los datos del cliente $id";
     }
