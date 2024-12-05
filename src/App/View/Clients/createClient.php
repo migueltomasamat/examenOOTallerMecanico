@@ -7,7 +7,7 @@
 </head>
 <body>
 <h2>Crear Nuevo Cliente</h2>
-<form method="post" action="/crearCliente">
+<form method="post" action="/clients">
     <label for="uuid">UUID:</label>
     <input type="text" name="clientuuid" id="uuid" value="<?= Uuid::uuid4(); ?>" readonly><br> <!-- Generar un UUID automáticamente -->
 
