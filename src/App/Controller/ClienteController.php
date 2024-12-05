@@ -17,14 +17,15 @@ class ClienteController implements InterfaceController
 {
     //GET /clients
     public function index($api){
-        include_once DIRECTORIO_VISTAS."/Users/indexClient.php";
+        include_once DIRECTORIO_VISTAS."/Clients/indexClient.php";
     }
 
     //GET /clients/create
     public function create($api){
         //Aquí mostraríamos el formulario de registro
+        include_once DIRECTORIO_VISTAS."/Clients/createClient.php";
         echo "Formulario de registro de un cliente";
-        //include_once DIRECTORIO_VISTAS."/Users/createClient.php";
+
     }
 
     //POST /clients
@@ -46,7 +47,7 @@ class ClienteController implements InterfaceController
 
         //Comprobamos si ha habido errores
         if (is_array($errores)){
-            include_once DIRECTORIO_VISTAS."/Users/errorClient.php";
+            include_once DIRECTORIO_VISTAS."/Clients/errorClient.php";
         }else{
             $cliente=Usuario::crearClienteAPartirDeUnArray($_POST);
         }
@@ -76,7 +77,7 @@ class ClienteController implements InterfaceController
             include_once DIRECTORIO_VISTAS."errores.php";
             exit();
         }else{
-            include_once DIRECTORIO_VISTAS."Users/editClient.php"; //Revisar
+            include_once DIRECTORIO_VISTAS."Clients/editClient.php"; //Revisar
         }
     }
 
