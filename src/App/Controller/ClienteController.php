@@ -78,7 +78,6 @@ class ClienteController implements InterfaceController
         }else{
             include_once DIRECTORIO_VISTAS."Users/editClient.php"; //Revisar
         }
-
     }
 
 
