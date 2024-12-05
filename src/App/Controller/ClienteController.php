@@ -44,71 +44,99 @@ class ClienteController implements InterfaceController
             $errores = $exception->getMessages();
         }
 
-        // Comprobamos si hubo errores en la validación
-        if (is_array($errores) && !empty($errores)) {
-            if ($api) {
-                http_response_code(400);
-                header('Content-Type: application/json');
-                echo json_encode(['errores' => $errores]);
-            } else {
-                include_once __DIR__ . "/../View/Clients/errorClient.php";
-            }
-            return;
+        //Comprobamos si ha habido errores
+        if (is_array($errores)){
+            include_once __DIR__."/../View/Users/errorClient.php";
+        }else{
+            $cliente=Usuario::crearClienteAPartirDeUnArray($_POST);
         }
+        //Guardamos el cliente
+        $cliente->save();
 
-        // Crear un cliente y verificar disponibilidad
-        try {
-            $cliente = new ConcreteCliente(uniqid());
-            $cliente->setNombre($_POST['clientname'])
-                ->setDireccion($_POST['clientaddress'] ?? '')
-                ->setAbierto((bool)$_POST['clientisopen'])
-                ->setCoste((float)$_POST['clientcost']);
-
-            // Usuario asociado
-            $usuario = UsuarioModel::leerUsuario($_POST['useruuid']);
-            $cliente->setUsuario($usuario);
-
-            // Verificar disponibilidad específica (implementado en la clase concreta)
-            if (!$cliente->comprobarDisponibilidad()) {
-                throw new Exception('El cliente no está disponible.');
-            }
-
-            // Guardar cliente y teléfonos
-            ClienteModel::guardarCliente($cliente);
-
-            if ($api) {
-                http_response_code(201);
-                header('Content-Type: application/json');
-                echo json_encode($cliente);
-            } else {
-                $informacion = ['Se ha creado el cliente correctamente'];
-                include_once __DIR__ . "/../View/Info/info.php";
-            }
-        } catch (Exception $e) {
-            if ($api) {
-                http_response_code(500);
-                header('Content-Type: application/json');
-                echo json_encode(['error' => $e->getMessage()]);
-            } else {
-                $errores = [$e->getMessage()];
-                include_once __DIR__ . "/../View/Clients/errorClient.php";
-            }
+        //Creación del cliente
+        if ($api){
+            http_response_code(201);
+            header('Content-Type: application/json');
+            echo json_encode($cliente);
+        }else{
+            $informacion=['Se ha creado el usuario correctamente'];
+            $_SESSION['clientname']=$cliente->getNombre();
+            $_SESSION['clientuuid']=$cliente->getUuid();
+            include_once DIRECTORIO_VISTAS."informacion.php";
         }
     }
 
 
     //GET /clients/{id_usuario}/edit
-    public function edit($id){
-        //Mostraría un formulario con los datos del usuario
-        echo "Formulario para editar los datos del cliente $id";
+    public function edit($id,$api){
+        //Comprobar que el cliente exista y cargar los datos
+        $cliente=ClienteModel::leerCliente($id);
+        if (!$cliente){
+            $errores[]="Usuario no encontrado";
+            include_once DIRECTORIO_VISTAS."errores.php";
+            exit();
+        }else{
+            include_once DIRECTORIO_VISTAS."Users/editClient.php"; //Revisar
+        }
 
     }
 
 
     //PUT /clients/{id_usuario}
-    public function update($id){
-        //Guardaría los datos modificados del usuario
-        echo "Función para actualizar los datos en la BD del cliente $id";
+    public function update($id,$api){
+        // Obtén el cliente actual desde el modelo
+        $cliente = ClienteModel::leerCliente($id);
+
+        // Leer los datos enviados a través de PUT
+        parse_str(file_get_contents("php://input"), $datos_put_para_editar);
+
+        // Filtramos y validamos los datos recibidos
+        try {
+            Validator::key('clientname', Validator::optional(Validator::stringType()->notEmpty()->length(3, 100)), false)
+                ->key('clientaddress', Validator::optional(Validator::stringType()->length(1, 255)), false)
+                ->key('clientisopen', Validator::optional(Validator::boolType()), false)
+                ->key('clientcost', Validator::optional(Validator::numeric()->positive()), false)
+                ->key('clientphones', Validator::optional(Validator::arrayType()), false)
+                ->key('userdata', Validator::optional(Validator::json()), false)
+                ->assert($datos_put_para_editar);
+        } catch (NestedValidationException $exception) {
+            $errores = $exception->getMessages();
+        }
+
+        // Manejar errores de validación
+        if (isset($errores) && is_array($errores)) {
+            if ($api) {
+                http_response_code(400);
+                header('Content-Type: application/json');
+                echo json_encode(['errors' => $errores]);
+                return;
+            } else {
+                include_once __DIR__ . '/../View/Clients/errorClient.php';
+                return;
+            }
+        }
+
+        // Actualizar los datos del cliente
+        $cliente->setNombre($datos_put_para_editar['clientname'] ?? $cliente->getNombre());
+        $cliente->setDireccion($datos_put_para_editar['clientaddress'] ?? $cliente->getDireccion());
+        $cliente->setAbierto($datos_put_para_editar['clientisopen'] ?? $cliente->isAbierto());
+        $cliente->setCoste($datos_put_para_editar['clientcost'] ?? $cliente->getCoste());
+        $cliente->setTelefonos($datos_put_para_editar['clientphones'] ?? $cliente->getTelefonos());
+
+        // Guardar el cliente actualizado en la base de datos
+        $cliente->save();
+
+        // Responder a la solicitud
+        if ($api) {
+            http_response_code(200);
+            header('Content-Type: application/json');
+            echo json_encode($cliente);
+        } else {
+            $_SESSION['clientename'] = $cliente->getNombre();
+            $_SESSION['clienteuuid'] = $cliente->getUuid();
+            $informacion = ['Se ha actualizado el cliente correctamente'];
+            include_once DIRECTORIO_VISTAS . "informacion.php";
+        }
 
     }
 
