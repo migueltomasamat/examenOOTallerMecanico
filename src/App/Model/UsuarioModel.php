@@ -205,7 +205,7 @@ class UsuarioModel
 
     }
 
-    public static function obtenerUsuarios():array{
+    public static function obtenerUsuarios($filas=10000, $filadecomienzo=0):array{
         $conexion= UsuarioModel::conectarBD();
 
         $sql="SELECT useruuid,
@@ -220,11 +220,14 @@ class UsuarioModel
                  usermark,
                  usercard,
                  userdata,
-                 usertype FROM user";
+                 usertype FROM user LIMIT ? OFFSET ?";
 
-        $resultado=$conexion->query($sql);
+        $stmt=$conexion->prepare($sql);
+        $stmt->bindValue(1,$filas,PDO::PARAM_INT);
+        $stmt->bindValue(2,$filadecomienzo,PDO::PARAM_INT);
 
-        $usuarios=$resultado->fetchAll(PDO::FETCH_ASSOC);
+        $stmt->execute();
+        $usuarios=$stmt->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($usuarios as $usuario){
             $usuario=Usuario::crearUsuarioAPartirDeUnArray($usuario);
@@ -243,6 +246,15 @@ class UsuarioModel
         return $arrayUsuarios;
     }
 
+    public static function numeroDeUsuarios():?int{
+        $conexion=UsuarioModel::conectarBD();
+
+        $resultado=$conexion->query("SELECT count(*) as numusers FROM user");
+        $fila= $resultado->fetchAll();
+        return $fila[0]['numusers'];
+
+
+    }
 
 
 

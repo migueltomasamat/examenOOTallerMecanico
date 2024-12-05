@@ -1,7 +1,7 @@
 <!-- BOTTOM NAV -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
     <div class="container">
-        <a class="navbar-brand" href="#">ReserDAWtions<span class="dot">.</span></a>
+        <a class="navbar-brand" href="/">ReserDAWtions<span class="dot">.</span></a>
         <!--<a class="navbar-brand" style="width: 8vw" href="/"><img src="<?=DIRECTORIO_RECURSOS?>img/logo.png"</a>-->
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"

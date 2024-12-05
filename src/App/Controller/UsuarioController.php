@@ -20,7 +20,8 @@ class UsuarioController implements InterfaceController
 
     //GET /users
     public function index($api){
-        $usuarios= UsuarioModel::obtenerUsuarios();
+        var_dump($_GET);
+        $usuarios= UsuarioModel::obtenerUsuarios(6,2);
         if ($api){
             http_response_code(200);
             header('Content-Type: application/json');
@@ -112,7 +113,6 @@ class UsuarioController implements InterfaceController
 
         //Filtraremos esos datos
         try {
-
             Validator::key('usernick', Validator::optional(Validator::stringType()->notEmpty()->length(3, null)),false)
                 ->key('username', Validator::optional(Validator::stringType()),false)
                 ->key('userdni', Validator::optional(Validator::stringType()->length(9,9)),false)

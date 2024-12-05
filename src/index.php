@@ -98,7 +98,7 @@ $router->addRoute('get','/ia',function(){
         'messages' => [
             ['role' => 'system', 'content' => 'Eres una IA para una Web de Reservas'],
             ['role' => 'user', 'content' => 'Hola!'],
-            ['role' => 'assistant', 'content' => 'Crea una clasificacion del 1 al 100 de lo completos que son los datos del usuario que recibirás a continuación'],
+            ['role' => 'assistant', 'content' => 'Convierte los datos a una clasificación del usuario del 0 al 100'],
             ['role' => 'user', 'content' => json_encode($usuario)],
         ],
     ]);

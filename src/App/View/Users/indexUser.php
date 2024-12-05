@@ -7,7 +7,7 @@ include_once DIRECTORIO_VISTAS."template/navegacion.php";
 ?>
 
 <section id="services" class="text-center">
-    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center justify-content-center">
         <?php
         foreach ($usuarios as $usuario){?>
             <div class="col">
@@ -36,6 +36,22 @@ include_once DIRECTORIO_VISTAS."template/navegacion.php";
         <?php
         }
         ?>
+
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link">Previous</a>
+                </li>
+                <?php
+                    $numUsuarios=\App\Model\UsuarioModel::numeroDeUsuarios();
+                    $paginas=($numUsuarios/5)+1;
+                    for($i=0;$i<$paginas;$i++){?>
+                        <li class="page-item"><a class="page-link" href="/users?pag=<?=$i?>"><?=$i?></a></li>
+                    <?php } ?>
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </section>
 
