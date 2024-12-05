@@ -19,9 +19,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/services">Servicios</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/clientes">Clientes</a>
-                </li>
             </ul>
             <?php if (isset($_SESSION['username'])){?>
 

@@ -80,7 +80,4 @@ class Hotel extends Cliente
         $this->precio = $precio;
         return $this;
     }
-
-
-
 }

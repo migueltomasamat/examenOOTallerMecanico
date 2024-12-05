@@ -20,7 +20,14 @@ class UsuarioController implements InterfaceController
 
     //GET /users
     public function index($api){
-        include_once __DIR__."/../View/Users/indexUser.php";
+        $usuarios= UsuarioModel::obtenerUsuarios();
+        if ($api){
+            http_response_code(200);
+            header('Content-Type: application/json');
+            echo json_encode($usuarios);
+        }else{
+            include_once DIRECTORIO_VISTAS."Users/indexUser.php";
+        }
     }
 
     //GET /users/create
@@ -170,7 +177,7 @@ class UsuarioController implements InterfaceController
                 header('Content-Type: application/json');
                 echo json_encode($usuario);
             }else{
-                return true;
+                echo '';
             }
 
 
@@ -199,6 +206,8 @@ class UsuarioController implements InterfaceController
                 http_response_code(200);
                 header('Content-Type: application/json');
                 echo json_encode($usuario);
+            }else{
+                include_once DIRECTORIO_VISTAS."Users/editUser.php";
             }
         }catch(ReadUserException $e){
             if($api){

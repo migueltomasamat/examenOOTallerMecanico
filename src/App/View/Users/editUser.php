@@ -64,8 +64,16 @@ include_once DIRECTORIO_VISTAS."template/navegacion.php";
                                 echo "";
                             } ?>">
                         </div>
-                        <input class="btn btn-brand ms-lg-3" value="Enviar" type="submit">
-                        <a href="/borraruser" class="btn btn-danger ms-lg-5">Borrar Usuario</a>
+                        <?php
+                        if (isset($_SESSION['useruuid']) && isset($_SESSION['username'])){?>
+                            <input class="btn btn-brand ms-lg-3" value="Modificar" type="submit">
+                            <a href="/borraruser" class="btn btn-danger ms-lg-5">Borrar Usuario</a>
+                        <?php }else{ ?>
+                            <p class="alert-warning">Debe iniciar sesión para poder modificar o borrar el usuario</p>
+                            <input class="btn btn-brand ms-lg-3" value="Modificar" type="submit" disabled>
+                            <a href="/users/<?=$usuario->getUuid()?>" class="btn btn-danger ms-lg-5 disabled">Borrar Usuario</a>
+                        <?php } ?>
+
                     </form>
                 </div>
             </div>

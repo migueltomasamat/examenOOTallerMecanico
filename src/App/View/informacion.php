@@ -9,9 +9,8 @@ include_once DIRECTORIO_VISTAS."template/navegacion.php";
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="info-box">
-                        <h1>
-                            Oops!</h1>
+                    <div class="info-box flex-column">
+                        <h1>¡Atención!</h1>
                         <?php foreach ($informacion as $informacion){
                             echo "<h2>$informacion</h2>";
                         }?>

@@ -205,6 +205,44 @@ class UsuarioModel
 
     }
 
+    public static function obtenerUsuarios():array{
+        $conexion= UsuarioModel::conectarBD();
+
+        $sql="SELECT useruuid,
+                 usernick,
+                 userpass,
+                 userdni,
+                 useremail,
+                 DATE_FORMAT(userbirthdate,'%d/%m/%Y') as userbirthdate,
+                 username,
+                 usersurname,
+                 useradress,
+                 usermark,
+                 usercard,
+                 userdata,
+                 usertype FROM user";
+
+        $resultado=$conexion->query($sql);
+
+        $usuarios=$resultado->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($usuarios as $usuario){
+            $usuario=Usuario::crearUsuarioAPartirDeUnArray($usuario);
+            $sql = "SELECT phoneprefix,phonenumber FROM phone WHERE useruuid=?";
+            $stmt= $conexion->prepare($sql);
+            $stmt->execute([$usuario->getuuid()]);
+            $telefonos= $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($telefonos as $telefono){
+                $arrayTelefonos[]=new Telefono($telefono['phonenumber'],$telefono['phoneprefix']);
+            }
+            $usuario->setTelefonos($arrayTelefonos);
+            $arrayTelefonos=array();
+            $arrayUsuarios[]=$usuario;
+        }
+
+        return $arrayUsuarios;
+    }
+
 
 
 
