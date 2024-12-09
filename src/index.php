@@ -146,5 +146,5 @@ $router->addRoute('get','/bookings/{id}/edit',[\App\Controller\ReservasControlle
 $router->addRoute('put','/bookings/{id}',[\App\Controller\ReservasController::class,'update']);
 $router->addRoute('get','/bookings/{id}',[\App\Controller\ReservasController::class,'show']);
 $router->addRoute('delete','/bookings/{id}',[\App\Controller\ReservasController::class,'destroy']);
+$router->resolver($_SERVER['REQUEST_METHOD'],$_SERVER['REDIRECT_URL']);
 
-$router->resolver($_SERVER['REQUEST_METHOD'],$_SERVER['REQUEST_URI']);

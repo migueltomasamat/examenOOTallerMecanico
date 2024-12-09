@@ -36,23 +36,66 @@ include_once DIRECTORIO_VISTAS."template/navegacion.php";
         <?php
         }
         ?>
-
-        <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                    <a class="page-link">Previous</a>
-                </li>
-                <?php
-                    $numUsuarios=\App\Model\UsuarioModel::numeroDeUsuarios();
-                    $paginas=($numUsuarios/5)+1;
-                    for($i=0;$i<$paginas;$i++){?>
-                        <li class="page-item"><a class="page-link" href="/users?pag=<?=$i?>"><?=$i?></a></li>
-                    <?php } ?>
-                    <a class="page-link" href="#">Next</a>
-                </li>
-            </ul>
-        </nav>
     </div>
+    <div>
+        <?php
+         //Conocer página siguiente y página anterior
+        $query = $_SERVER['QUERY_STRING'];
+        $parampag = $query[-1];
+        if($parampag==0){
+            $anterior=0;
+            $siguiente=1;
+        }else{
+            $anterior=$parampag-1;
+            $siguiente=$parampag+1;
+        }
+        ?>
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <?php if ($parampag==0){?>
+                <li class="page-item disabled">
+                    <a class="page-link" href="/users?pag=<?=$anterior?>">Anterior</a>
+                </li>
+            <?php }else{?>
+                <li class="page-item">
+                    <a class="page-link" href="/users?pag=<?=$anterior?>">Anterior</a>
+                </li>
+            <?php } ?>
+
+            <?php
+                $numUsuarios=\App\Model\UsuarioModel::numeroDeUsuarios();
+                if ($numUsuarios%3==0){
+                    $paginas=intval($numUsuarios/3);
+                }else{
+                    $paginas=intval($numUsuarios/3)+1;
+                }
+                for($i=0;$i<$paginas;$i++){
+                    if ($i==$parampag){?>
+                        <li class="page-item active"><a class="page-link" href="/users?pag=<?=$i?>"><?=$i+1?></a></li>
+                <?php }else{ ?>
+                        <li class="page-item"><a class="page-link" href="/users?pag=<?=$i?>"><?=$i+1?></a></li>
+                <?php }
+                    }?>
+
+
+
+                        <?php if ($parampag+1==$paginas){?>
+                <li class="page-item disabled">
+                    <a class="page-link" href="/users?pag=<?=$siguiente?>">Siguiente</a>
+                </li>
+            <?php }else{?>
+                <li class="page-item">
+                    <a class="page-link" href="/users?pag=<?=$siguiente?>">Siguiente</a>
+                </li>
+            <?php } ?>
+
+
+
+            </li>
+        </ul>
+    </nav>
+    </div>
+
 </section>
 
 <?php

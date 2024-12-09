@@ -20,8 +20,10 @@ class UsuarioController implements InterfaceController
 
     //GET /users
     public function index($api){
-        var_dump($_GET);
-        $usuarios= UsuarioModel::obtenerUsuarios(6,2);
+        if (isset($_GET['pag'])){
+            $pag=$_GET['pag'];
+        }
+        $usuarios= UsuarioModel::obtenerUsuarios(3,3*$pag);
         if ($api){
             http_response_code(200);
             header('Content-Type: application/json');

@@ -256,6 +256,23 @@ class UsuarioModel
 
     }
 
+    public static function obtenerUsuarioPorEmail(string $email){
+        $conexion=UsuarioModel::conectarBD();
+
+        $sql="SELECT * FROM user where useremail=:email";
+
+        $stmt= $conexion->prepare($sql);
+
+        $stmt->bindValue('email',$email);
+
+        $stmt->execute();
+
+        $resultado=$stmt->fetch();
+
+        return Usuario::crearUsuarioAPartirDeUnArray($resultado);
+
+    }
+
 
 
 }

@@ -399,17 +399,6 @@ class Usuario implements JsonSerializable
         return 0.0;
     }
 
-    /**
-     * @param array $datosUsuario
-     * @return false|array
-     */
-    public static function filtrarDatosUsuarioParaCrear(array $datosUsuario):false|array
-    {
-
-
-        return false;
-    }
-
 
     /**
      * @param array $datosUsuario
