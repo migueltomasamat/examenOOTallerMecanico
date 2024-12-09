@@ -71,9 +71,9 @@ include_once DIRECTORIO_VISTAS."template/navegacion.php";
                 }
                 for($i=0;$i<$paginas;$i++){
                     if ($i==$parampag){?>
-                        <li class="page-item active"><a class="page-link" href="/users?pag=<?=$i?>"><?=$i+1?></a></li>
+                        <li class="page-item active"><a class="page-link" href="/users?pag=<?=$i+1?>"><?=$i+1?></a></li>
                 <?php }else{ ?>
-                        <li class="page-item"><a class="page-link" href="/users?pag=<?=$i?>"><?=$i+1?></a></li>
+                        <li class="page-item"><a class="page-link" href="/users?pag=<?=$i+1?>"><?=$i+1?></a></li>
                 <?php }
                     }?>
 
@@ -88,10 +88,6 @@ include_once DIRECTORIO_VISTAS."template/navegacion.php";
                     <a class="page-link" href="/users?pag=<?=$siguiente?>">Siguiente</a>
                 </li>
             <?php } ?>
-
-
-
-            </li>
         </ul>
     </nav>
     </div>
