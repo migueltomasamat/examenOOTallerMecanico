@@ -16,6 +16,9 @@ class Router
     }
 
     public function resolver(string $metodohttp,string $url){
+        if (isset($_SERVER['QUERY_STRING'])){
+            $url=rtrim($url,"?".$_SERVER['QUERY_STRING']);
+        }
         //Comprobamos si es una ruta con API y si es quitamos de la URL el /api
         $api= $this->comprobarRutaAPI($url);
         //Lógica para crear una instancia y llamar al méthodo de la clase

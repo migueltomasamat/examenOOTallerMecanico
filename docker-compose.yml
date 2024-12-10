@@ -1,11 +1,11 @@
 # Services
 services:
   # Apache + PHP
-  apache_php_oo:
+  apache_php_examen:
     build:
       context: ./.docker
       dockerfile: Dockerfile
-    container_name: proyecto2php
+    container_name: proyectoExamenphp
     # Preparamos un volumen para almacenar nuestro código
     volumes:
       - ./src/:/var/www/html
@@ -16,19 +16,19 @@ services:
     ports:
       - 8081:80
     networks:
-      - reserdawtions
+      - examen
     links:
-      - mariadboo
+      - mariadbexamen
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
-  mariadboo:
+  mariadbexamen:
     image: mariadb
     command:
       --default-authentication-plugin=mysql_native_password
     environment:
       MARIADB_ROOT_PASSWORD: toor
-      MARIADB_DATABASE: reserdawtions
+      MARIADB_DATABASE: examenbd
       MARIADB_USER: miguel
       MARIADB_PASSWORD: leugim
     volumes:
@@ -36,18 +36,11 @@ services:
     ports:
       - 3307:3306
     networks:
-      - reserdawtions
-  ollama:
-    image: ollama/ollama
-    volumes:
-      - .docker/ollama:/root/.ollama
-    networks:
-      - reserdawtions
-    ports:
-      - 11434:11434
+      - examen
+
 
 networks:
-  reserdawtions:
-    name: reserdawtions
+  examen:
+    name: examen
     driver: bridge
 

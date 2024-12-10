@@ -4,8 +4,8 @@ const DIRECTORIO_RECURSOS = "/App/View/template/assets/";
 const DIRECTORIO_VISTAS = "App/View/";
 
 const DIRECTORIO_CONTROLADOR = "App/Controller/";
-const NOMBRE_CONTAINER_DATABASE = "mariadboo";
-const NOMBRE_DATABASE = "reserdawtions";
+const NOMBRE_CONTAINER_DATABASE = "mariadbexamen";
+const NOMBRE_DATABASE = "examenbd";
 
 const USUARIO_DATABASE = "miguel";
 

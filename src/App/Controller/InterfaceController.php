@@ -11,6 +11,7 @@ interface InterfaceController
     //GET /users/create
     public function create($api);
 
+
     //POST /users
     public function store($api);
 
