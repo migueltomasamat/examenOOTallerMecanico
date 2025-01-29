@@ -51,7 +51,7 @@ class Router
     private function cambiar_id_uri(string $uri):string{
         $uriArray = explode('/',$uri);
         //var_dump($uriArray);
-        if (count($uriArray)>2 && Uuid::isValid($uriArray[2])){
+        if (count($uriArray)>2 && (Uuid::isValid($uriArray[2]) or is_numeric($uriArray[2]))){
             $uriArray[2]="{id}";
         }
         return implode("/",$uriArray);
