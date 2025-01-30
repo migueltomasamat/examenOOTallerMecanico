@@ -40,13 +40,13 @@ alter table receta_ingrediente add constraint fk_receta_ingrediente_receta forei
 //
 
 insert into ingrediente values (1,'Pimiento',100);
-INSERT INTO ingrediente VALUES (11, 'Tomate', 250);
-INSERT INTO ingrediente VALUES (12, 'Queso Cheddar', 75);
-INSERT INTO ingrediente VALUES (13, 'Ajo', 3);
-INSERT INTO ingrediente VALUES (14, 'Pepino', 150);
-INSERT INTO ingrediente VALUES (15, 'Espinaca', 50);
-INSERT INTO ingrediente VALUES (16, 'Aceite de Oliva', 40);
-INSERT INTO ingrediente VALUES (17, 'Batata', 200);
-INSERT INTO ingrediente VALUES (18, 'Jamón', 120);
-INSERT INTO ingrediente VALUES (19, 'Cebolla', 5);
+INSERT INTO ingrediente VALUES (2, 'Tomate', 250);
+INSERT INTO ingrediente VALUES (3, 'Queso Cheddar', 75);
+INSERT INTO ingrediente VALUES (4, 'Ajo', 3);
+INSERT INTO ingrediente VALUES (5, 'Pepino', 150);
+INSERT INTO ingrediente VALUES (6, 'Espinaca', 50);
+INSERT INTO ingrediente VALUES (7, 'Aceite de Oliva', 40);
+INSERT INTO ingrediente VALUES (8, 'Batata', 200);
+INSERT INTO ingrediente VALUES (9, 'Jamón', 120);
+INSERT INTO ingrediente VALUES (10, 'Cebolla', 5);
 //
