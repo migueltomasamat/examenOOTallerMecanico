@@ -1,23 +1,52 @@
 DELIMITER //
-drop table if exists estudiante cascade;
-drop table if exists expediente cascade;
+drop table if exists ingrediente cascade;
+drop table if exists receta cascade;
+drop table if exists usuario cascade;
+drop table if exists receta_ingrediente cascade;
 //
 
-create table estudiante(
-    nia integer,
+create table usuario(
+    id integer,
+    mail varchar(255),
+    tarjeta varchar(16)
+);
+//
+create table ingrediente(
+    id integer,
     nombre varchar(100),
-    correo varchar(255),
-    ref_expediente varchar(10)
+    calorias float
 );
 //
-create table expediente(
-    referencia varchar(10),
-    contenido varchar(1000),
-    fecha_modificacion date
+create table receta(
+    id integer,
+    nombre varchar(100),
+    fecha_creacion date,
+    id_usuario integer
 );
+//
+create table receta_ingrediente(
+    id_receta integer,
+    id_ingrediente integer
+)
+//
+alter table usuario add constraint pk_usuario primary key (id);
+alter table receta add constraint pk_receta primary key (id);
+alter table ingrediente add constraint pk_ingrediente primary key(id);
+alter table receta_ingrediente add constraint pk_receta_usuario primary key(id_receta,id_ingrediente);
+//
+alter table receta add constraint fk_receta_usuario foreign key (id_usuario) references usuario(id);
+alter table receta_ingrediente add constraint fk_receta_ingrediente_ingrediente foreign key(id_ingrediente) references ingrediente(id);
+alter table receta_ingrediente add constraint fk_receta_ingrediente_receta foreign key(id_receta) references ingrediente(id);
 //
 
-alter table estudiante add constraint pk_estudiante primary key (nia);
-alter table expediente add constraint pk_expediente primary key (referencia);
+insert into ingrediente values (1,'Pimiento',100);
+INSERT INTO ingrediente VALUES (11, 'Tomate', 250);
+INSERT INTO ingrediente VALUES (12, 'Queso Cheddar', 75);
+INSERT INTO ingrediente VALUES (13, 'Ajo', 3);
+INSERT INTO ingrediente VALUES (14, 'Pepino', 150);
+INSERT INTO ingrediente VALUES (15, 'Espinaca', 50);
+INSERT INTO ingrediente VALUES (16, 'Aceite de Oliva', 40);
+INSERT INTO ingrediente VALUES (17, 'Batata', 200);
+INSERT INTO ingrediente VALUES (18, 'Jamón', 120);
+INSERT INTO ingrediente VALUES (19, 'Cebolla', 5);
 //
-alter table estudiante add constraint fk_estudiante_expediente foreign key (ref_expediente) references expediente(referencia);
