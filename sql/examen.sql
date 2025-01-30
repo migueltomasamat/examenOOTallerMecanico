@@ -1,8 +1,8 @@
 DELIMITER //
-drop table if exists ingrediente cascade;
-drop table if exists receta cascade;
-drop table if exists usuario cascade;
 drop table if exists receta_ingrediente cascade;
+drop table if exists ingrediente cascade;
+drop table if exists usuario cascade;
+drop table if exists receta cascade;
 //
 
 create table usuario(
